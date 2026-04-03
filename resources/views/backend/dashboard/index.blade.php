@@ -1,293 +1,87 @@
-<!DOCTYPE html>
-<html>
+<x-layout-admin title="Dashboard">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Admin - NY Tech</title>
-    <style>
-        /* ===== BODY ===== */
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #eef2f7;
-            margin: 0;
-            display: flex;
-        }
+    <!-- STATS -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
 
-        /* ===== SIDEBAR ===== */
-        .sidebar {
-            width: 240px;
-            background: linear-gradient(180deg, #1e272e, #2f3542);
-            color: white;
-            height: 100vh;
-            position: fixed;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar h2 {
-            text-align: center;
-            padding: 20px 0;
-            margin: 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .sidebar a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #dcdde1;
-            padding: 12px 20px;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-
-        .sidebar a.active,
-        .sidebar a:hover {
-            background: #57606f;
-            color: white;
-            padding-left: 25px;
-        }
-
-        /* ===== MAIN ===== */
-        .main {
-            margin-left: 240px;
-            flex: 1;
-        }
-
-        /* ===== HEADER ===== */
-        .header {
-            background: white;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        .header h3 {
-            margin: 0;
-        }
-
-        .header a {
-            text-decoration: none;
-            color: #007bff;
-        }
-
-        /* ===== CONTENT ===== */
-        .content {
-            padding: 25px;
-        }
-
-        /* ===== CARDS ===== */
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card h3 {
-            margin: 0;
-            font-size: 30px;
-            color: #007bff;
-        }
-
-        .card p {
-            color: #888;
-        }
-
-        /* ===== TABLE ===== */
-        table {
-            width: 100%;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            border-collapse: collapse;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        }
-
-        table th,
-        table td {
-            padding: 12px;
-            text-align: center;
-        }
-
-        table th {
-            background: #f1f3f6;
-        }
-
-        table tr:hover {
-            background: #f9fbfd;
-        }
-
-        /* ===== PRODUCT IMAGE ===== */
-        .product-img {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        /* ===== BUTTONS ===== */
-        button,
-        .btn {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        button.edit,
-        .btn-edit {
-            background: #3498db;
-            color: white;
-        }
-
-        button.edit:hover,
-        .btn-edit:hover {
-            background: #2980b9;
-        }
-
-        button.delete,
-        .btn-delete {
-            background: #e74c3c;
-            color: white;
-        }
-
-        button.delete:hover,
-        .btn-delete:hover {
-            background: #c0392b;
-        }
-
-        /* ===== BADGES ===== */
-        .badge {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: white;
-        }
-
-        .badge.active {
-            background: #2ecc71;
-        }
-
-        .badge.hide {
-            background: #e67e22;
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-        <h2>NY Tech</h2>
-        <a href="/admin" class="active">📊 Dashboard</a>
-        <a href="/admin/products">📦 Sản phẩm</a>
-        <a href="/admin/categories">📂 Danh mục</a>
-        <a href="/admin/orders">🛒 Đơn hàng</a>
-        <a href="/admin/users">👤 Người dùng</a>
-    </div>
-
-    <!-- MAIN -->
-
-    <div class="main">
-        <div class="header">
-            <h3>👋 Chào Admin!</h3>
-            <div>Admin | <a href="/">Trang chủ</a></div>
+        <div class="bg-white p-5 rounded-xl shadow text-center">
+            <h3 class="text-3xl font-bold text-blue-500">
+                {{ $productCount }}
+            </h3>
+            <p class="text-gray-500 mt-1">Sản phẩm</p>
         </div>
 
-        <div class="content">
-
-            <!-- DASHBOARD CARDS -->
-            <div class="cards">
-                <div class="card">
-                    <h3>120</h3>
-                    <p>Sản phẩm</p>
-                </div>
-                <div class="card">
-                    <h3>45</h3>
-                    <p>Đơn hàng</p>
-                </div>
-                <div class="card">
-                    <h3>30</h3>
-                    <p>Khách hàng</p>
-                </div>
-                <div class="card">
-                    <h3>150tr</h3>
-                    <p>Doanh thu</p>
-                </div>
-            </div>
-
-            <!-- TABLE -->
-            <h2>Sản phẩm mới</h2>
-            <a href="#" class="btn btn-edit" style="margin-bottom:10px;">➕ Thêm sản phẩm</a>
-            <!-- <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Hình</th>
-                    <th>Tên</th>
-                    <th>Giá</th>
-                    <th>Trạng thái</th>
-                    <th>Hành động</th>
-                </tr>
-
-                <tr>
-                    <td>1</td>
-                    <td><img src="img/iphone-15-pro-max.jpg" class="product-img"></td>
-                    <td>Iphone 15 Pro Max</td>
-                    <td>30.000.000đ</td>
-                    <td><span class="badge active">Hiện</span></td>
-                    <td>
-                        <button class="edit">Sửa</button>
-                        <button class="delete">Xóa</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>2</td>
-                    <td><img src="img/macbook-e.jpg" class="product-img"></td>
-                    <td>Macbook Air M2</td>
-                    <td>28.000.000đ</td>
-                    <td><span class="badge hide">Ẩn</span></td>
-                    <td>
-                        <button class="edit">Sửa</button>
-                        <button class="delete">Xóa</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>3</td>
-                    <td><img src="img/ss s24.jpg" class="product-img"></td>
-                    <td>Samsung Galaxy S24</td>
-                    <td>24.000.000đ</td>
-                    <td><span class="badge active">Hiện</span></td>
-                    <td>
-                        <button class="edit">Sửa</button>
-                        <button class="delete">Xóa</button>
-                    </td>
-                </tr>
-
-            </table> -->
+        <div class="bg-white p-5 rounded-xl shadow text-center">
+            <h3 class="text-3xl font-bold text-green-500">
+                {{ $userCount }}
+            </h3>
+            <p class="text-gray-500 mt-1">Người dùng</p>
         </div>
+
+        <div class="bg-white p-5 rounded-xl shadow text-center">
+            <h3 class="text-3xl font-bold text-purple-500">--</h3>
+            <p class="text-gray-500 mt-1">Doanh thu</p>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl shadow text-center">
+            <h3 class="text-3xl font-bold text-red-500">--</h3>
+            <p class="text-gray-500 mt-1">Đơn hàng</p>
+        </div>
+
     </div>
 
-</body>
+    <!-- PRODUCT TABLE -->
+    <div class="bg-white rounded-xl shadow overflow-hidden">
 
-</html>
+        <div class="flex justify-between items-center p-4 border-b">
+            <h2 class="font-semibold text-gray-700">Sản phẩm mới</h2>
+
+            <a href="{{ route('product.index') }}"
+                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm">
+                Xem tất cả
+            </a>
+        </div>
+
+        <table class="w-full text-sm text-gray-700">
+            <thead class="bg-gray-200 text-xs uppercase">
+                <tr>
+                    <th class="p-3">ID</th>
+                    <th class="p-3">Tên</th>
+                    <th class="p-3">Giá</th>
+                    <th class="p-3">Trạng thái</th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y">
+                @foreach($products as $item)
+                <tr class="hover:bg-gray-50">
+
+                    <td class="p-3 text-center">{{ $item->id }}</td>
+
+                    <td class="p-3 text-center font-medium">
+                        {{ $item->name }}
+                    </td>
+
+                    <td class="p-3 text-center text-green-600">
+                        {{ number_format($item->price_buy) }}đ
+                    </td>
+
+                    <td class="p-3 text-center">
+                        @if($item->status)
+                            <span class="px-3 py-1 text-xs rounded-full bg-green-100 text-green-600">
+                                Hiện
+                            </span>
+                        @else
+                            <span class="px-3 py-1 text-xs rounded-full bg-gray-200 text-gray-600">
+                                Ẩn
+                            </span>
+                        @endif
+                    </td>
+
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+    </div>
+
+</x-layout-admin>
