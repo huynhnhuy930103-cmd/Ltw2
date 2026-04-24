@@ -9,25 +9,20 @@ use App\Models\Product;
 
 class ProductNew extends Component
 {
-    /**
-     * Create a new component instance.
-     */
+    public $products;
+
     public function __construct()
     {
-        //
-    }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
-    public function render(): View|Closure|string
-    {
-         $list_product = Product::select('id', 'name', 'price_buy', 'price_sale', 'image')
-            ->where('status', 1)
-            ->orderBy('created_at', 'desc')
+        $this->products = Product::where('status', 1)
+            ->whereNull('deleted_at')
+            ->orderBy('created_at', 'DESC')
             ->limit(4)
             ->get();
+    }
 
-    return view('components.product-new', compact('list_product'));
+    public function render(): View|Closure|string
+    {
+        return view('components.product-new');
     }
 }

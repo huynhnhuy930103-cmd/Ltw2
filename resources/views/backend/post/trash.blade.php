@@ -1,38 +1,94 @@
 <x-layout-admin>
 
-    <h2 class="text-2xl font-bold mb-4">Thùng rác bài viết</h2>
+<div class="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 p-6">
 
-    <a href="{{ route('post.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded">
-        ⬅ Quay lại
-    </a>
+    <div class="max-w-6xl mx-auto">
 
-    <table class="w-full border mt-4">
-        <thead>
-            <tr>
-                <th class="border p-2">ID</th>
-                <th class="border p-2">Tiêu đề</th>
-                <th class="border p-2">Chức năng</th>
-            </tr>
-        </thead>
+        <!-- HEADER -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-3xl font-bold text-gray-800">
+                🗑 Thùng rác bài viết
+            </h2>
 
-        <tbody>
-            @foreach ($posts as $item)
-                <tr>
-                    <td class="border p-2">{{ $item->id }}</td>
-                    <td class="border p-2">{{ $item->title }}</td>
+            <a href="{{ route('post.index') }}"
+               class="px-5 py-2 rounded-lg bg-gray-400 text-white hover:bg-gray-500">
+                ⬅ Quay lại
+            </a>
+        </div>
 
-                    <td class="border p-2 flex gap-2">
-                        <a href="{{ route('admin.post.restore', $item->id) }}">♻ Restore</a>
+        <!-- TABLE CARD -->
+        <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden border border-gray-200">
 
-                        <form action="{{ route('admin.post.delete', $item->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button onclick="return confirm('Xóa vĩnh viễn?')">❌</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+            <table class="w-full text-sm">
+
+                <!-- HEAD -->
+                <thead class="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs uppercase">
+                    <tr>
+                        <th class="p-4 text-left">ID</th>
+                        <th class="p-4 text-left">Tiêu đề</th>
+                        <th class="p-4 text-center">Chức năng</th>
+                    </tr>
+                </thead>
+
+                <!-- BODY -->
+                <tbody class="divide-y">
+
+                    @forelse ($posts as $item)
+                    <tr class="hover:bg-red-50 transition">
+
+                        <td class="p-4 font-semibold text-gray-600">
+                            {{ $item->id }}
+                        </td>
+
+                        <td class="p-4 text-gray-800">
+                            {{ $item->title }}
+                        </td>
+
+                        <td class="p-4">
+                            <div class="flex justify-center gap-2">
+
+                                <!-- RESTORE -->
+                                <a href="{{ route('admin.post.restore', $item->id) }}"
+                                   class="bg-green-500 text-white px-3 py-1 rounded-lg hover:bg-green-600 shadow">
+                                    ♻
+                                </a>
+
+                                <!-- DELETE -->
+                                <form action="{{ route('admin.post.delete', $item->id) }}"
+                                      method="POST"
+                                      onsubmit="return confirm('Xóa vĩnh viễn bài viết này?')">
+
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        class="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 shadow">
+                                        ❌
+                                    </button>
+
+                                </form>
+
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    @empty
+                    <tr>
+                        <td colspan="3" class="text-center p-6 text-gray-400">
+                            😢 Thùng rác trống
+                        </td>
+                    </tr>
+                    @endforelse
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
 
 </x-layout-admin>

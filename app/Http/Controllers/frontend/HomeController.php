@@ -1,26 +1,44 @@
 <?php
 
+// namespace App\Http\Controllers\frontend;
+
+// use App\Http\Controllers\Controller;
+// use Illuminate\Http\Request;
+
+// class HomeController extends Controller
+// {
+//     public function index()
+// {
+//     return view('frontend.home');
+// }
+
+// }
+
+
+
 namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
+use App\Models\Product; //
+
+use function PHPUnit\Framework\returnArgument;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $list_phone = Product::where('category_id', 8)
-            ->where('status', 1)
-            ->orderBy('created_at', 'DESC')
-            ->take(8) // Đảm bảo con số này là 8
+
+        $product_sale = Product::where('status', 1)
+            ->where('price_sale', '>', 0)
+            ->orderBy('created_at', 'desc')
+            ->take(4)
             ->get();
 
-        $list_laptop = Product::where('status', 1)
-            ->where('category_id', 4)
-            ->latest()
-            ->limit(8)
+        $products_new = Product::where('status', 1)
+            ->orderBy('created_at', 'desc')
+            ->take(4)
             ->get();
 
-        return view('frontend.home', compact('list_phone', 'list_laptop'));
+        return view('frontend.home', compact('product_sale', 'products_new'));
     }
 }

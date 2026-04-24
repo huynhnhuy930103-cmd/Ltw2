@@ -1,99 +1,133 @@
 <x-layout-admin>
 
-    <h2 class="text-2xl font-bold mb-6">Thêm danh mục</h2>
+<div class="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 p-6">
 
-    <form method="POST" action="{{ route('category.store') }}" enctype="multipart/form-data"
-        class="max-w-2xl bg-white p-6 rounded-xl shadow">
+    <div class="max-w-4xl mx-auto bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-gray-200">
 
-        @csrf
+        <!-- HEADER -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-3xl font-bold text-gray-800">
+                ➕ Thêm danh mục mới
+            </h2>
 
-        {{-- NAME --}}
-        <div class="mb-4">
-            <label class="block mb-1 font-medium">Tên danh mục</label>
-            <input type="text" name="name" id="name" class="w-full border rounded px-3 py-2" required>
-        </div>
-
-        {{-- SLUG (auto) --}}
-        <div class="mb-4">
-            <label class="block mb-1 font-medium">Slug</label>
-            <input type="text" name="slug" id="slug" class="w-full border rounded px-3 py-2 bg-gray-100"
-                readonly>
-        </div>
-
-        {{-- IMAGE --}}
-        <div class="mb-4">
-            <label class="block mb-1 font-medium">Hình ảnh</label>
-            <input type="file" name="image" class="w-full border rounded px-3 py-2">
-        </div>
-
-        {{-- PARENT --}}
-        <div class="mb-4">
-            <label class="block mb-1 font-medium">Danh mục cha</label>
-
-            <select name="parent_id" class="w-full border rounded px-3 py-2">
-
-                <option value="0">-- Không có --</option>
-
-                @foreach ($parents as $item)
-                    <option value="{{ $item->id }}">
-                        {{ $item->name }}
-                    </option>
-                @endforeach
-
-            </select>
-        </div>
-
-        {{-- SORT --}}
-        <div class="mb-4">
-            <label class="block mb-1 font-medium">Thứ tự</label>
-            <input type="number" name="sort_order" value="1" class="w-full border rounded px-3 py-2">
-        </div>
-
-        {{-- DESCRIPTION --}}
-        <div class="mb-4">
-            <label class="block mb-1 font-medium">Mô tả</label>
-            <textarea name="description" rows="4" class="w-full border rounded px-3 py-2"></textarea>
-        </div>
-
-        {{-- STATUS --}}
-        <div class="mb-4">
-            <label class="block mb-1 font-medium">Trạng thái</label>
-
-            <select name="status" class="w-full border rounded px-3 py-2">
-                <option value="1">Hiển thị</option>
-                <option value="2">Ẩn</option>
-            </select>
-        </div>
-
-        {{-- BUTTON --}}
-        <div class="flex gap-2">
-            <button class="bg-blue-600 text-white px-4 py-2 rounded">
-                Lưu
-            </button>
-
-            <a href="{{ route('category.index') }}" class="bg-gray-400 text-white px-4 py-2 rounded">
-                Hủy
+            <a href="{{ route('category.index') }}"
+               class="px-5 py-2 rounded-lg bg-gray-400 text-white hover:bg-gray-500">
+                ← Quay lại
             </a>
         </div>
 
-    </form>
+        <!-- FORM -->
+        <form method="POST" action="{{ route('category.store') }}" enctype="multipart/form-data"
+              class="grid grid-cols-2 gap-6">
 
-    {{-- AUTO SLUG --}}
-    <script>
-        const nameInput = document.getElementById('name');
-        const slugInput = document.getElementById('slug');
+            @csrf
 
-        nameInput.addEventListener('input', function() {
-            let slug = this.value
-                .toLowerCase()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .replace(/[^a-z0-9\s-]/g, '')
-                .trim()
-                .replace(/\s+/g, '-');
+            {{-- NAME --}}
+            <div class="col-span-2">
+                <label class="text-sm text-gray-600">Tên danh mục</label>
+                <input type="text" name="name" id="name" value="{{ old('name') }}"
+                    class="w-full border px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
+                    placeholder="Nhập tên danh mục...">
 
-            slugInput.value = slug;
-        });
-    </script>
+                @error('name')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            {{-- SLUG --}}
+            <div class="col-span-2">
+                <label class="text-sm text-gray-600">Slug</label>
+                <input type="text" name="slug" id="slug" value="{{ old('slug') }}"
+                    class="w-full border px-4 py-2 rounded-lg bg-gray-100"
+                    readonly>
+            </div>
+
+            {{-- IMAGE --}}
+            <div class="col-span-2">
+                <label class="text-sm text-gray-600">Hình ảnh</label>
+                <input type="file" name="image"
+                    class="w-full border px-4 py-2 rounded-lg">
+            </div>
+
+            {{-- PARENT --}}
+            <div>
+                <label class="text-sm text-gray-600">Danh mục cha</label>
+                <select name="parent_id"
+                    class="w-full border px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-400">
+
+                    <option value="0">-- Không có --</option>
+
+                    @foreach ($parents as $item)
+                        <option value="{{ $item->id }}">
+                            {{ $item->name }}
+                        </option>
+                    @endforeach
+
+                </select>
+            </div>
+
+            {{-- SORT --}}
+            <div>
+                <label class="text-sm text-gray-600">Thứ tự</label>
+                <input type="number" name="sort_order"
+                    value="{{ old('sort_order', 1) }}"
+                    class="w-full border px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-400">
+            </div>
+
+            {{-- DESCRIPTION --}}
+            <div class="col-span-2">
+                <label class="text-sm text-gray-600">Mô tả</label>
+                <textarea name="description" rows="4"
+                    class="w-full border px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-400"
+                    placeholder="Nhập mô tả...">{{ old('description') }}</textarea>
+            </div>
+
+            {{-- STATUS --}}
+            <div class="col-span-2">
+                <label class="text-sm text-gray-600">Trạng thái</label>
+                <select name="status"
+                    class="w-full border px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-400">
+
+                    <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>✔ Hiển thị</option>
+                    <option value="2" {{ old('status') == 2 ? 'selected' : '' }}>⛔ Ẩn</option>
+
+                </select>
+            </div>
+
+            {{-- BUTTON --}}
+            <div class="col-span-2 flex justify-end gap-3 mt-4">
+
+                <a href="{{ route('category.index') }}"
+                   class="px-5 py-2 rounded-lg bg-gray-400 text-white hover:bg-gray-500">
+                    Hủy
+                </a>
+
+                <button class="px-6 py-2 rounded-lg text-white bg-gradient-to-r from-indigo-500 to-blue-500 hover:scale-105 transition shadow-lg">
+                    💾 Lưu danh mục
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{{-- AUTO SLUG --}}
+<script>
+document.getElementById('name').addEventListener('input', function () {
+    let slug = this.value
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd')
+        .replace(/[^a-z0-9 ]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+
+    document.getElementById('slug').value = slug;
+});
+</script>
 
 </x-layout-admin>

@@ -1,78 +1,101 @@
 <x-layout-admin>
 
-    <h2 class="text-2xl font-bold mb-4">Thùng rác thương hiệu</h2>
+    <div class="max-w-6xl mx-auto p-6">
 
-    <div class="mb-4">
-        <a href="{{ route('brand.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded">
-            ← Quay lại
-        </a>
-    </div>
+        {{-- HEADER --}}
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">
+                🗑 Thùng rác thương hiệu
+            </h2>
 
-    <table class="w-full border border-gray-300">
+            <a href="{{ route('brand.index') }}"
+               class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg shadow transition">
+                ← Quay lại
+            </a>
+        </div>
 
-        <thead class="bg-gray-100">
-            <tr>
-                <th class="border p-2">ID</th>
-                <th class="border p-2">Tên</th>
-                <th class="border p-2">Slug</th>
-                <th class="border p-2">Hành động</th>
-            </tr>
-        </thead>
+        {{-- TABLE CARD --}}
+        <div class="bg-white shadow-lg rounded-xl overflow-hidden border">
 
-        <tbody>
-            @forelse($brands as $item)
-                <tr>
+            <table class="w-full text-sm">
 
-                    <td class="border p-2 text-center">
-                        {{ $item->id }}
-                    </td>
+                <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
+                    <tr>
+                        <th class="p-3 text-center">ID</th>
+                        <th class="p-3 text-left">Tên</th>
+                        <th class="p-3 text-left">Slug</th>
+                        <th class="p-3 text-center">Hành động</th>
+                    </tr>
+                </thead>
 
-                    <td class="border p-2">
-                        {{ $item->name }}
-                    </td>
+                <tbody class="divide-y divide-gray-200">
 
-                    <td class="border p-2">
-                        {{ $item->slug }}
-                    </td>
+                    @forelse($brands as $item)
+                        <tr class="hover:bg-gray-50 transition">
 
-                    <td class="border p-2">
-                        <div class="flex gap-3 justify-center">
+                            <td class="p-3 text-center font-medium text-gray-600">
+                                {{ $item->id }}
+                            </td>
 
-                            {{-- RESTORE --}}
-                            <a href="{{ route('brand.restore', $item->id) }}" class="text-green-600">
-                                ♻ Khôi phục
-                            </a>
+                            <td class="p-3 font-semibold text-gray-800">
+                                {{ $item->name }}
+                            </td>
 
-                            {{-- DELETE --}}
-                            <form action="{{ route('brand.delete', $item->id) }}" method="POST"
-                                onsubmit="return confirm('Xóa vĩnh viễn?')">
+                            <td class="p-3 text-gray-500">
+                                {{ $item->slug }}
+                            </td>
 
-                                @csrf
-                                @method('DELETE')
+                            <td class="p-3">
+                                <div class="flex justify-center gap-3">
 
-                                <button class="text-red-600">
-                                    🗑 Xóa
-                                </button>
+                                    {{-- RESTORE --}}
+                                    <a href="{{ route('admin.brand.restore', $item->id) }}"
+                                       class="px-3 py-1 rounded-md bg-green-100 text-green-700 hover:bg-green-200 transition text-sm">
+                                        ♻ Khôi phục
+                                    </a>
 
-                            </form>
+                                    {{-- DELETE --}}
+                                    <form action="{{ route('admin.brand.delete', $item->id) }}"
+                                          method="POST"
+                                          onsubmit="return confirm('Xóa vĩnh viễn?')">
 
-                        </div>
-                    </td>
+                                        @csrf
+                                        @method('DELETE')
 
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4" class="text-center p-4">
-                        Thùng rác trống
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
+                                        <button class="px-3 py-1 rounded-md bg-red-100 text-red-700 hover:bg-red-200 transition text-sm">
+                                            🗑 Xóa
+                                        </button>
 
-    </table>
+                                    </form>
 
-    <div class="mt-4">
-        {{ $brands->links() }}
+                                </div>
+                            </td>
+
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center p-8 text-gray-500">
+                                <div class="flex flex-col items-center gap-2">
+                                    <span class="text-3xl">🗂</span>
+                                    <p>Thùng rác trống</p>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {{-- PAGINATION --}}
+        <div class="mt-6">
+            <div class="bg-white p-3 rounded-lg shadow flex justify-center">
+                {{ $brands->links() }}
+            </div>
+        </div>
+
     </div>
 
 </x-layout-admin>

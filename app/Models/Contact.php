@@ -2,10 +2,28 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Contact extends Model
 {
-    use HasFactory;
+    use SoftDeletes;
+
+    protected $table = 'contact';
+
+    protected $fillable = [
+        'user_id',
+        'name',
+        'email',
+        'phone',
+        'title',
+        'content',
+        'replay_id',
+        'updated_by',
+        'status',
+    ];
+
+    protected $dates = [
+        'deleted_at'
+    ];
 }

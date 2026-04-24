@@ -1,242 +1,56 @@
+<x-layout-site title="{{ $product->name }}">
 
+    <div class="max-w-6xl mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 gap-10">
 
-    <style>
-        body {
-            font-family: Arial;
-            margin: 0;
-            background: #f5f5f5;
-        }
-
-        /* HEADER */
-
-        header{
-    background:#222;
-    color:white;
-    padding:30px 0;   /* tăng chiều cao header */
-}
-
-.header-container{
-    width:90%;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-/* logo */
-
-.logo h2{
-    margin:0;
-    font-size:32px;   /* logo to hơn */
-    color:#00bfff;
-}
-
-/* menu */
-
-.menu a{
-    color:white;
-    margin:0 15px;
-    text-decoration:none;
-    font-weight:bold;
-    font-size:18px;   /* chữ menu to hơn */
-}
-
-.menu a:hover{
-    color:#00bfff;
-}
-
-/* search */
-
-.search input{
-    padding:10px;
-    font-size:16px;
-}
-
-.search button{
-    padding:10px 15px;
-    background:#00bfff;
-    border:none;
-    color:white;
-    cursor:pointer;
-    font-size:16px;
-}
-
-/* icon giỏ hàng */
-
-.header-icons a{
-    font-size:18px;
-    margin-left:15px;
-    color:white;
-    text-decoration:none;
-}
-.header-icons a:hover{
-    color:#00bfff;
-}
-/* MENU */
-
-.menu a{
-    color:white;
-    margin:0 10px;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-.menu a:hover{
-    color:#00bfff;
-}
-
-/* SEARCH */
-
-.search input{
-    padding:6px;
-    border:none;
-}
-
-.search button{
-    padding:6px 10px;
-    background:#00bfff;
-    border:none;
-    color:white;
-    cursor:pointer;
-}
-        /* PRODUCT DETAIL */
-
-        .container {
-            width: 90%;
-            margin: auto;
-            margin-top: 30px;
-            display: flex;
-            gap: 40px;
-        }
-
-        /* IMAGE */
-
-        .product-image {
-            width: 40%;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .product-image img {
-            width: 300px;
-        }
-
-        /* INFO */
-
-        .product-info {
-            width: 60%;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .product-info h1 {
-            margin-top: 0;
-        }
-
-        .price {
-            color: red;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        /* QUANTITY */
-
-        .quantity {
-            margin: 20px 0;
-        }
-
-        .quantity input {
-            width: 60px;
-            padding: 5px;
-        }
-
-        /* BUTTON */
-
-        .add-cart {
-            padding: 10px 20px;
-            background: #ff6600;
-            border: none;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .add-cart:hover {
-            background: #e65c00;
-        }
-
-        /* DESCRIPTION */
-
-        .description {
-            margin-top: 20px;
-        }
-
-        /* FOOTER */
-
-        footer {
-            margin-top: 40px;
-            background: #222;
-            color: white;
-            text-align: center;
-            padding: 15px;
-        }
-    </style>
-
-</head>
-
-<body>
-
-
-    <x-layout-site title="Chi tiết - sản phẩm">
-    <div class="container">
-
-        <div class="product-image">
-
-        <img src="{{ asset('img/iphone-15-pro-max.jpg') }}">
+        <!-- IMAGE -->
+        <div class="bg-white p-6 rounded-2xl shadow flex justify-center items-center">
+            <img
+                src="{{ asset('img/' . $product->image) }}"
+                alt="{{ $product->name }}"
+                class="w-72 hover:scale-105 transition duration-300">
         </div>
 
+        <!-- INFO -->
+        <div class="bg-white p-6 rounded-2xl shadow">
 
-        <div class="product-info">
+            <!-- NAME -->
+            <h1 class="text-3xl font-bold mb-4 text-gray-800">
+                {{ $product->name }}
+            </h1>
 
-            <h1>Iphone 15 Pro Max</h1>
-            
-            <p class="price">30.000.000đ</p>
-
-            <p>
-                Điện thoại iPhone 15 Pro Max với chip A17 Pro mạnh mẽ,
-                màn hình Super Retina XDR 6.7 inch,
-                camera 48MP và pin sử dụng cả ngày.
+            <!-- PRICE -->
+            <p class="text-red-500 text-2xl font-semibold mb-4">
+                {{ number_format($product->price_buy) }} đ
             </p>
 
-            <div class="quantity">
+            <!-- DESCRIPTION -->
+            <p class="text-gray-600 mb-6">
+                {{ $product->detail ?? 'Đang cập nhật mô tả...' }}
+            </p>
 
-                <label>Số lượng:</label>
-                <input type="number" value="1" min="1">
-
+            <!-- QUANTITY -->
+            <div class="mb-6">
+                <label class="block mb-2 font-semibold text-gray-700">
+                    Số lượng
+                </label>
+                <input
+                    type="number"
+                    value="1"
+                    min="1"
+                    class="w-20 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400">
             </div>
 
-            <button onclick="alert('Đã thêm vào giỏ')">🛒 Thêm vào giỏ</button>
-
-            <div class="description">
-
-                <h3>Mô tả sản phẩm</h3>
-
-                <p>
-                    iPhone 15 Pro Max được thiết kế với khung titanium cao cấp,
-                    mang lại độ bền cao và trọng lượng nhẹ.
-                    Máy trang bị chip A17 Pro mới nhất giúp xử lý nhanh và tiết kiệm pin.
-                </p>
-
-            </div>
+            <!-- BUTTON -->
+            <a href="/them-gio/{{ $product->id }}"
+                class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold transition inline-block">
+                🛒 Thêm vào giỏ
+            </a>
 
         </div>
 
     </div>
 
-    </x-layout-site>
-</body>
+    <!-- 👉 SẢN PHẨM LIÊN QUAN -->
+    <x-product-related :product="$product" />
 
+</x-layout-site>

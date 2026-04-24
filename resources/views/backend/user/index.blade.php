@@ -1,87 +1,133 @@
 <x-layout-admin>
 
-    <h2 class="text-2xl font-bold mb-4">Quản lý người dùng</h2>
+<div class="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 p-6">
 
-    {{-- 🔗 BUTTON --}}
-    <div class="mb-4 flex gap-3">
+    {{-- HEADER --}}
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold text-gray-800">
+            👤 Quản lý người dùng
+        </h2>
 
-        <a href="{{ route('user.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">
-            ➕ Thêm user
-        </a>
+        <div class="flex gap-3">
 
-        <a href="{{ route('admin.user.trash') }}" class="bg-red-500 text-white px-4 py-2 rounded">
-            🗑 Thùng rác
-        </a>
+            <a href="{{ route('user.create') }}"
+               class="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-5 py-2 rounded-lg shadow-lg hover:scale-105 transition">
+                ➕ Thêm user
+            </a>
 
+            <a href="{{ route('admin.user.trash') }}"
+               class="bg-gradient-to-r from-red-500 to-pink-500 text-white px-5 py-2 rounded-lg shadow-lg hover:scale-105 transition">
+                🗑 Thùng rác
+            </a>
+
+        </div>
     </div>
 
-    {{-- 📋 TABLE --}}
-    <table class="w-full border border-gray-300">
+    {{-- TABLE CARD --}}
+    <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden border border-gray-200">
 
-        <thead class="bg-gray-100">
-            <tr>
-                <th class="border p-2">ID</th>
-                <th class="border p-2">Tên</th>
-                <th class="border p-2">Email</th>
-                <th class="border p-2">SĐT</th>
-                <th class="border p-2">Role</th>
-                <th class="border p-2">Trạng thái</th>
-                <th class="border p-2">Chức năng</th>
-            </tr>
-        </thead>
+        <table class="w-full text-sm">
 
-        <tbody>
-            @forelse ($users as $item)
+            <thead class="bg-gradient-to-r from-indigo-500 to-blue-500 text-white text-xs uppercase">
                 <tr>
+                    <th class="p-4 text-left">ID</th>
+                    <th class="p-4 text-left">Tên</th>
+                    <th class="p-4 text-left">Email</th>
+                    <th class="p-4 text-left">SĐT</th>
+                    <th class="p-4 text-center">Role</th>
+                    <th class="p-4 text-center">Trạng thái</th>
+                    <th class="p-4 text-center">Chức năng</th>
+                </tr>
+            </thead>
 
-                    <td class="border p-2">{{ $item->id }}</td>
-                    <td class="border p-2">{{ $item->name }}</td>
-                    <td class="border p-2">{{ $item->email }}</td>
-                    <td class="border p-2">{{ $item->phone }}</td>
+            <tbody class="divide-y">
 
-                    <td class="border p-2">
-                        <span
-                            class="px-2 py-1 rounded text-white
-                            {{ $item->roles == 'admin' ? 'bg-red-500' : 'bg-blue-500' }}">
+                @forelse ($users as $item)
+                <tr class="hover:bg-indigo-50 transition">
+
+                    <td class="p-4 font-semibold text-gray-600">
+                        {{ $item->id }}
+                    </td>
+
+                    <td class="p-4 font-semibold text-gray-800">
+                        {{ $item->name }}
+                    </td>
+
+                    <td class="p-4 text-gray-600">
+                        {{ $item->email }}
+                    </td>
+
+                    <td class="p-4 text-gray-600">
+                        {{ $item->phone }}
+                    </td>
+
+                    {{-- ROLE --}}
+                    <td class="p-4 text-center">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold
+                            {{ $item->roles == 'admin' ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-600' }}">
                             {{ $item->roles }}
                         </span>
                     </td>
 
-                    <td class="border p-2">
-                        <span
-                            class="px-2 py-1 rounded text-white
-                            {{ $item->status == 1 ? 'bg-green-500' : 'bg-gray-400' }}">
-                            {{ $item->status == 1 ? 'Active' : 'Hidden' }}
-                        </span>
+                    {{-- STATUS --}}
+                    <td class="p-4 text-center">
+                        @if($item->status == 1)
+                            <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs">
+                                ● Active
+                            </span>
+                        @else
+                            <span class="bg-gray-200 text-gray-600 px-3 py-1 rounded-full text-xs">
+                                ● Hidden
+                            </span>
+                        @endif
                     </td>
 
-                    <td class="border p-2">
-                        <div class="flex gap-2">
+                    {{-- ACTION --}}
+                    <td class="p-4">
+                        <div class="flex justify-center gap-2">
 
-                            <a href="{{ route('user.show', $item->id) }}">👁</a>
+                            <a href="{{ route('user.show', $item->id) }}"
+                               class="bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 shadow">
+                                👁
+                            </a>
 
-                            <a href="{{ route('user.edit', $item->id) }}">✏</a>
+                            <a href="{{ route('user.edit', $item->id) }}"
+                               class="bg-yellow-400 px-3 py-1 rounded-lg hover:bg-yellow-500 shadow">
+                                ✏
+                            </a>
 
-                            <form action="{{ route('user.destroy', $item->id) }}" method="POST"
-                                onsubmit="return confirm('Xóa user này?')">
+                            <form action="{{ route('user.destroy', $item->id) }}"
+                                  method="POST"
+                                  onsubmit="return confirm('Xóa user này?')">
+
                                 @csrf
                                 @method('DELETE')
-                                <button>🗑</button>
+
+                                <button class="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 shadow">
+                                    🗑
+                                </button>
+
                             </form>
 
                         </div>
                     </td>
 
                 </tr>
-            @empty
+                @empty
                 <tr>
-                    <td colspan="7" class="text-center p-4">
-                        Không có user
+                    <td colspan="7" class="text-center p-6 text-gray-400">
+                        😢 Không có user
                     </td>
                 </tr>
-            @endforelse
-        </tbody>
+                @endforelse
 
-    </table>
+            </tbody>
+
+        </table>
+        
+
+    </div>
+
+</div>
 
 </x-layout-admin>

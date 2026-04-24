@@ -1,75 +1,59 @@
 <x-layout-admin>
 
-    <h2 class="text-2xl font-bold mb-6">Thêm user mới</h2>
+<div class="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 p-6">
 
-    {{-- BUTTON QUAY VỀ --}}
-    <div class="mb-4">
-        <a href="{{ route('user.index') }}"
-           class="bg-gray-600 text-white px-4 py-2 rounded">
-            ← Quay về
-        </a>
-    </div>
+    <div class="max-w-5xl mx-auto bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl border">
 
-    <form action="{{ route('user.store') }}" method="POST"
-          class="space-y-4 bg-white p-6 rounded shadow">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-3xl font-bold text-gray-800">➕ Thêm User</h2>
 
-        @csrf
-
-        <div>
-            <label class="block font-medium mb-1">Tên</label>
-            <input name="name" class="border w-full p-2 rounded">
+            <a href="{{ route('user.index') }}"
+               class="px-5 py-2 rounded-lg bg-gray-400 text-white hover:bg-gray-500">
+                ← Quay lại
+            </a>
         </div>
 
-        <div>
-            <label class="block font-medium mb-1">Email</label>
-            <input name="email" class="border w-full p-2 rounded">
-        </div>
+        <form action="{{ route('user.store') }}" method="POST" class="grid grid-cols-2 gap-6">
+            @csrf
 
-        <div>
-            <label class="block font-medium mb-1">Số điện thoại</label>
-            <input name="phone" class="border w-full p-2 rounded">
-        </div>
+            <input name="name" placeholder="Tên"
+                class="border px-4 py-2 rounded-lg">
 
-        <div>
-            <label class="block font-medium mb-1">Username</label>
-            <input name="username" class="border w-full p-2 rounded">
-        </div>
+            <input name="email" placeholder="Email"
+                class="border px-4 py-2 rounded-lg">
 
-        <div>
-            <label class="block font-medium mb-1">Mật khẩu</label>
-            <input type="password" name="password" class="border w-full p-2 rounded">
-        </div>
+            <input name="phone" placeholder="SĐT"
+                class="border px-4 py-2 rounded-lg">
 
-        <div>
-            <label class="block font-medium mb-1">Địa chỉ</label>
-            <input name="address" class="border w-full p-2 rounded">
-        </div>
+            <input name="username" placeholder="Username"
+                class="border px-4 py-2 rounded-lg">
 
-        <div>
-            <label class="block font-medium mb-1">Ảnh</label>
-            <input name="image" class="border w-full p-2 rounded">
-        </div>
+            <input type="password" name="password" placeholder="Mật khẩu"
+                class="border px-4 py-2 rounded-lg">
 
-        <div>
-            <label class="block font-medium mb-1">Quyền</label>
-            <select name="roles" class="border w-full p-2 rounded">
+            <input name="address" placeholder="Địa chỉ"
+                class="border px-4 py-2 rounded-lg col-span-2">
+
+            <select name="roles" class="border px-4 py-2 rounded-lg">
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
             </select>
-        </div>
 
-        <div>
-            <label class="block font-medium mb-1">Trạng thái</label>
-            <select name="status" class="border w-full p-2 rounded">
+            <select name="status" class="border px-4 py-2 rounded-lg">
                 <option value="1">Active</option>
                 <option value="2">Hidden</option>
             </select>
-        </div>
 
-        <button class="bg-blue-600 text-white px-4 py-2 rounded">
-            ➕ Tạo user
-        </button>
+            <div class="col-span-2 flex justify-end">
+                <button class="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-6 py-2 rounded-lg">
+                    ➕ Tạo user
+                </button>
+            </div>
 
-    </form>
+        </form>
+
+    </div>
+
+</div>
 
 </x-layout-admin>

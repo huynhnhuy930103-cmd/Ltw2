@@ -35,7 +35,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|integer',
+            'user_id' => 'required|unique:order,name',
             'name'    => 'required|string|max:255',
             'phone'   => 'required|string|max:255',
             'email'   => 'required|email',

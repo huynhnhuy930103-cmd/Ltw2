@@ -1,85 +1,148 @@
 <x-layout-admin>
 
-    <h2 class="text-2xl font-bold mb-4">Cập nhật thương hiệu</h2>
+<div class="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 p-6">
 
-    <form action="{{ route('brand.update', $brand->id) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+    <div class="max-w-6xl mx-auto bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-gray-200">
 
-        @csrf
-        @method('PUT')
+        <!-- HEADER -->
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-3xl font-bold text-gray-800">
+                ✏️ Cập nhật thương hiệu #{{ $brand->id }}
+            </h2>
 
-        {{-- NAME --}}
-        <div>
-            <label class="font-semibold">Tên thương hiệu</label>
-            <input type="text" name="name" id="name" value="{{ $brand->name }}"
-                class="border w-full px-3 py-2 rounded" required>
+            <a href="{{ route('brand.index') }}"
+               class="px-5 py-2 rounded-lg bg-gray-400 text-white hover:bg-gray-500 transition">
+                ← Quay lại
+            </a>
         </div>
 
-        {{-- SLUG --}}
-        <div>
-            <label class="font-semibold">Slug</label>
-            <input type="text" name="slug" id="slug" value="{{ $brand->slug }}"
-                class="border w-full px-3 py-2 rounded bg-gray-100" readonly>
-        </div>
+        <form action="{{ route('brand.update', $brand->id) }}"
+              method="POST"
+              enctype="multipart/form-data"
+              class="grid grid-cols-2 gap-6">
 
-        {{-- SORT --}}
-        <div>
-            <label class="font-semibold">Thứ tự</label>
-            <input type="number" name="sort_order" value="{{ $brand->sort_order }}"
-                class="border w-full px-3 py-2 rounded">
-        </div>
+            @csrf
+            @method('PUT')
 
-        {{-- IMAGE --}}
-        <div>
-            <label class="font-semibold">Hình ảnh</label><br>
+            <!-- NAME -->
+            <div>
+                <label class="text-sm text-gray-600">Tên thương hiệu</label>
+                <input type="text" name="name" id="name"
+                    value="{{ $brand->name }}"
+                    class="w-full border px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none">
+            </div>
 
-            @if ($brand->image)
-                <img src="{{ asset('storage/' . $brand->image) }}" class="w-20 h-20 object-cover mb-2 rounded">
-            @endif
+            <!-- SLUG -->
+            <div>
+                <label class="text-sm text-gray-600">Slug</label>
+                <input type="text" name="slug" id="slug"
+                    value="{{ $brand->slug }}"
+                    readonly
+                    class="w-full border px-4 py-2 rounded-lg bg-gray-100">
+            </div>
 
-            <input type="file" name="image" class="border w-full px-3 py-2 rounded">
-        </div>
+            <!-- SORT -->
+            <div>
+                <label class="text-sm text-gray-600">Thứ tự</label>
+                <input type="number" name="sort_order"
+                    value="{{ $brand->sort_order }}"
+                    class="w-full border px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-400">
+            </div>
 
-        {{-- DESCRIPTION --}}
-        <div>
-            <label class="font-semibold">Mô tả</label>
-            <textarea name="description" class="border w-full px-3 py-2 rounded">{{ $brand->description }}</textarea>
-        </div>
+            <!-- STATUS -->
+            <div>
+                <label class="text-sm text-gray-600">Trạng thái</label>
+                <select name="status"
+                    class="w-full border px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-400">
 
-        {{-- STATUS --}}
-        <div>
-            <label class="font-semibold">Trạng thái</label>
-            <select name="status" class="border w-full px-3 py-2 rounded">
-                <option value="1" {{ $brand->status == 1 ? 'selected' : '' }}>Hiển thị</option>
-                <option value="2" {{ $brand->status == 2 ? 'selected' : '' }}>Ẩn</option>
-            </select>
-        </div>
+                    <option value="1" {{ $brand->status == 1 ? 'selected' : '' }}>
+                        ✔ Hiển thị
+                    </option>
 
-        <button class="bg-yellow-500 text-white px-4 py-2 rounded">
-            Cập nhật
-        </button>
+                    <option value="2" {{ $brand->status == 2 ? 'selected' : '' }}>
+                        ⛔ Ẩn
+                    </option>
 
-        <a href="{{ route('brand.index') }}" class="bg-gray-400 text-white px-4 py-2 rounded">
-            Quay lại
-        </a>
+                </select>
+            </div>
 
-    </form>
+            <!-- IMAGE -->
+            <div class="col-span-2">
+                <label class="text-sm text-gray-600">Hình ảnh</label>
 
-    {{-- auto slug khi sửa name --}}
-    <script>
-        const nameInput = document.getElementById('name');
-        const slugInput = document.getElementById('slug');
+                <div class="flex items-center gap-4 mt-2">
 
-        nameInput.addEventListener('input', function() {
-            let slug = this.value
-                .toLowerCase()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .replace(/[^a-z0-9\s-]/g, '')
-                .trim()
-                .replace(/\s+/g, '-');
+                    @if ($brand->image)
+                        <img src="{{ asset('storage/' . $brand->image) }}"
+                             id="preview"
+                             class="h-24 w-24 object-cover rounded-xl shadow border">
+                    @else
+                        <div id="preview"
+                             class="h-24 w-24 flex items-center justify-center bg-gray-100 rounded-xl text-gray-400">
+                            No img
+                        </div>
+                    @endif
 
-            slugInput.value = slug;
-        });
-    </script>
+                    <input type="file"
+                           name="image"
+                           class="flex-1 border px-4 py-2 rounded-lg">
+                </div>
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="col-span-2">
+                <label class="text-sm text-gray-600">Mô tả</label>
+                <textarea name="description" rows="3"
+                    class="w-full border px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-400">
+                    {{ $brand->description }}
+                </textarea>
+            </div>
+
+            <!-- BUTTON -->
+            <div class="col-span-2 flex justify-end gap-3 mt-4">
+
+                <a href="{{ route('brand.index') }}"
+                   class="px-5 py-2 rounded-lg bg-gray-400 text-white hover:bg-gray-500 transition">
+                    Hủy
+                </a>
+
+                <button
+                    class="px-6 py-2 rounded-lg text-white bg-gradient-to-r from-yellow-500 to-orange-500 hover:scale-105 transition shadow-lg">
+                    💾 Cập nhật
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{{-- AUTO SLUG --}}
+<script>
+document.getElementById('name').addEventListener('input', function () {
+    let slug = this.value
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/đ/g, 'd')
+        .replace(/[^a-z0-9 ]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+
+    document.getElementById('slug').value = slug;
+});
+</script>
+
+{{-- IMAGE PREVIEW --}}
+<script>
+document.querySelector('input[type="file"]').onchange = e => {
+    const [file] = e.target.files;
+    if (file) {
+        document.getElementById('preview').src = URL.createObjectURL(file);
+    }
+}
+</script>
 
 </x-layout-admin>

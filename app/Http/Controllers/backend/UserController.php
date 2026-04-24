@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::whereNull('deleted_at')->latest()->get();
+        $users = User::latest()->get();
         return view('backend.user.index', compact('users'));
     }
 
@@ -40,26 +40,26 @@ class UserController extends Controller
             'address' => $request->address,
             'image' => $request->image,
             'roles' => $request->roles ?? 'user',
-            'created_by' => Auth::id() ?? 1,
             'status' => $request->status ?? 1,
+            'created_by' => Auth::id() ?? 1,
         ]);
 
         return redirect()->route('user.index');
     }
 
-    public function show(string $id)
+    public function show($id)
     {
         $user = User::findOrFail($id);
         return view('backend.user.show', compact('user'));
     }
 
-    public function edit(string $id)
+    public function edit($id)
     {
         $user = User::findOrFail($id);
         return view('backend.user.edit', compact('user'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
 
@@ -69,7 +69,7 @@ class UserController extends Controller
             'phone' => 'required',
         ]);
 
-        $user->update([
+        $data = [
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
@@ -77,22 +77,22 @@ class UserController extends Controller
             'address' => $request->address,
             'image' => $request->image,
             'roles' => $request->roles,
-            'updated_by' => Auth::id() ?? 1,
             'status' => $request->status,
-        ]);
+            'updated_by' => Auth::id() ?? 1,
+        ];
 
         if ($request->password) {
-            $user->update([
-                'password' => Hash::make($request->password)
-            ]);
+            $data['password'] = Hash::make($request->password);
         }
+
+        $user->update($data);
 
         return redirect()->route('user.index');
     }
 
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        User::findOrFail($id)->delete();
+        User::findOrFail($id)->delete(); // soft delete
         return redirect()->route('user.index');
     }
 
@@ -106,22 +106,21 @@ class UserController extends Controller
     // RESTORE
     public function restore($id)
     {
-        $user = User::onlyTrashed()->findOrFail($id);
-        $user->restore();
+        User::onlyTrashed()->findOrFail($id)->restore();
 
         return redirect()->route('admin.user.trash');
     }
-    // DELETE FORCE
+
+    // FORCE DELETE
     public function delete($id)
     {
-        $user = User::onlyTrashed()->findOrFail($id);
-        $user->forceDelete();
+        User::onlyTrashed()->findOrFail($id)->forceDelete();
 
         return back();
     }
 
     // STATUS TOGGLE
-    public function status(string $id)
+    public function status($id)
     {
         $user = User::findOrFail($id);
         $user->status = $user->status == 1 ? 2 : 1;

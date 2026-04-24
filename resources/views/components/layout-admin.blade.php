@@ -12,42 +12,89 @@
 <body class="font-sans bg-gray-100 flex">
 
     <!-- SIDEBAR -->
-    <div class="w-60 h-screen fixed bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700 text-white shadow-lg">
+<div class="w-60 h-screen fixed bg-gradient-to-b from-gray-900 via-gray-800 to-gray-700 text-white shadow-lg">
 
-        <h2 class="text-center py-5 text-xl font-bold border-b border-gray-600 tracking-wide">
-            🚀 NY Tech
-        </h2>
+    <h2 class="text-center py-5 text-xl font-bold border-b border-gray-600 tracking-wide">
+        🚀 NY Tech
+    </h2>
 
-        <nav class="mt-2 space-y-1">
+    <nav class="mt-2 space-y-1">
 
-            <a href="/admin"
-                class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-blue-500 hover:text-white transition rounded-r-full">
-                📊 Dashboard
-            </a>
+        <!-- DASHBOARD -->
+        <a href="/admin"
+            class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-blue-500 hover:text-white transition rounded-r-full">
+            📊 Dashboard
+        </a>
 
-            <a href="/admin/product"
-                class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-blue-500 hover:text-white transition rounded-r-full">
-                📦 Sản phẩm
-            </a>
+        <!-- PRODUCT -->
+        <a href="/admin/product"
+            class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-blue-500 hover:text-white transition rounded-r-full">
+            📦 Sản phẩm
+        </a>
 
-            <a href="/admin/category"
-                class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-purple-500 hover:text-white transition rounded-r-full">
-                📂 Danh mục
-            </a>
+        <!-- CATEGORY -->
+        <a href="/admin/category"
+            class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-purple-500 hover:text-white transition rounded-r-full">
+            📂 Danh mục
+        </a>
 
-            <a href="/admin/order"
-                class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-green-500 hover:text-white transition rounded-r-full">
-                🛒 Đơn hàng
-            </a>
+        <!-- BRAND -->
+        <a href="/admin/brand"
+            class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-yellow-500 hover:text-white transition rounded-r-full">
+            🏷️ Thương hiệu
+        </a>
 
-            <a href="/admin/users"
-                class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-pink-500 hover:text-white transition rounded-r-full">
-                👤 Người dùng
-            </a>
+        <!-- TOPIC -->
+        <a href="/admin/topic"
+            class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-cyan-500 hover:text-white transition rounded-r-full">
+            🧩 Chủ đề
+        </a>
 
-        </nav>
+        <!-- POST -->
+        <a href="/admin/post"
+            class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-indigo-500 hover:text-white transition rounded-r-full">
+            📝 Bài viết
+        </a>
 
-    </div>
+        <!-- SLIDER -->
+        <a href="/admin/slider"
+            class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-rose-500 hover:text-white transition rounded-r-full">
+            🎞️ Trình chiếu
+        </a>
+
+        <!-- BANNER -->
+        <a href="/admin/banner"
+            class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-teal-500 hover:text-white transition rounded-r-full">
+            🖼️ Banner
+        </a>
+
+        <!-- MENU -->
+        <a href="/admin/menu"
+            class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-orange-500 hover:text-white transition rounded-r-full">
+            📑 Menu
+        </a>
+
+        <!-- ORDER -->
+        <a href="/admin/order"
+            class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-green-500 hover:text-white transition rounded-r-full">
+            🛒 Đơn hàng
+        </a>
+
+        <!-- USER -->
+        <a href="/admin/user"
+            class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-pink-500 hover:text-white transition rounded-r-full">
+            👤 Người dùng
+        </a>
+
+        <!-- CONTACT -->
+        <a href="/admin/contact"
+            class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-emerald-500 hover:text-white transition rounded-r-full">
+            📞 Liên hệ
+        </a>
+
+    </nav>
+
+</div>
 
     <!-- MAIN -->
     <div class="ml-60 flex-1 min-h-screen flex flex-col">

@@ -9,6 +9,8 @@ use App\Models\Category;
 use App\Models\Brand;
 use Illuminate\Support\Str;
 
+use App\Http\Requests\StoreProductRequest;
+
 class ProductController extends Controller
 {
     // ================== DANH SÁCH ==================
@@ -46,16 +48,16 @@ class ProductController extends Controller
     }
 
     // ================== LƯU ==================
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'category_id' => 'required',
-            'brand_id' => 'required',
-            'price_buy' => 'required|numeric',
-            'qty' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+        // $request->validate([
+        //     'name' => 'required|unique:product,name',
+        //     'category_id' => 'required',
+        //     'brand_id' => 'required',
+        //     'price_buy' => 'required|numeric',
+        //     'qty' => 'required|integer',
+        //     'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        // ]);
 
         // tạo slug
         $slug = Str::slug($request->name);
@@ -67,9 +69,10 @@ class ProductController extends Controller
         }
 
         // upload ảnh
-        $imageName = null;
         if ($request->hasFile('image')) {
             $imageName = $request->file('image')->store('product', 'public');
+        } else {
+            $imageName = 'no-image.png'; // ảnh mặc định
         }
 
         Product::create([
@@ -86,7 +89,7 @@ class ProductController extends Controller
             'status' => $request->status ?? 1,
         ]);
 
-        return redirect()->route('admin.product.index')->with('success', 'Thêm thành công');
+        return redirect()->route('product.index')->with('success', 'Thêm thành công');
     }
 
     // ================== CHI TIẾT ==================
@@ -154,7 +157,7 @@ class ProductController extends Controller
             'status' => $request->status ?? 1,
         ]);
 
-        return redirect()->route('admin.product.index')->with('success', 'Cập nhật thành công');
+        return redirect()->route('product.index')->with('success', 'Cập nhật thành công');
     }
 
     // ================== XÓA MỀM ==================
@@ -162,7 +165,7 @@ class ProductController extends Controller
     {
         Product::findOrFail($id)->delete();
 
-        return redirect()->route('admin.product.index')->with('success', 'Đã chuyển vào thùng rác');
+        return redirect()->route('product.index')->with('success', 'Đã chuyển vào thùng rác');
     }
 
     // ================== THÙNG RÁC ==================
@@ -203,6 +206,6 @@ class ProductController extends Controller
         $product->status = !$product->status;
         $product->save();
 
-        return redirect()->route('admin.product.index');
+        return redirect()->route('product.index');
     }
 }

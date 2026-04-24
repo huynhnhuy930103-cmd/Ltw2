@@ -30,6 +30,12 @@ use App\Http\Controllers\backend\ContactController;
 use App\Http\Controllers\backend\PostController;
 use App\Http\Controllers\backend\TopicController;
 use App\Http\Controllers\backend\MenuController;
+use App\Http\Controllers\frontend\CartController;
+use App\Http\Controllers\frontend\CheckoutController;
+
+use App\Http\Controllers\frontend\ThanhVienController;
+
+
 
 
 Route::get('/', [HomeController::class, 'index'])->name('site.home');
@@ -40,6 +46,28 @@ Route::get('gioi-thieu', [AboutController::class, 'index'])->name('site.about.in
 
 Route::get('lien-he', [LienheController::class, 'index'])->name('site.contact.index');
 Route::post('lien-he', [LienheController::class, 'store'])->name('site.contact.store');
+
+
+Route::get('/gio-hang', [CartController::class, 'index'])->name('cart.index');
+Route::get('/them-gio/{id}', [CartController::class, 'add']);
+Route::post('/cap-nhat-gio/{id}', [CartController::class, 'update']);
+Route::get('/xoa-gio/{id}', [CartController::class, 'remove']);
+
+
+//=========================TRANG THANH TOÁN=========================
+
+
+Route::get('/thanh-toan', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/dat-hang', [CheckoutController::class, 'store'])->name('checkout.store');
+
+Route::get('/dang-nhap', [ThanhVienController::class, 'doLogin']);
+Route::post('/dang-nhap', [ThanhVienController::class, 'dologin'])->name('site.login');
+Route::get('/dang-ky', [ThanhVienController::class, 'register'])->name('site.register');
+Route::post('/dang-ky', [ThanhVienController::class, 'doregister'])->name('site.doregister');
+Route::get('/dang-xuat', [ThanhVienController::class, 'logout'])->name('site.logout');
+Route::get('/thong-tin', [ThanhVienController::class, 'profile'])->name('site.profile');
+
+// ==========================Admin===========================
 Route::prefix('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('product', ProductController::class);
@@ -47,7 +75,7 @@ Route::prefix('admin')->group(function () {
         Route::get('trash', [ProductController::class, 'trash'])->name('admin.product.trash');
         Route::get('restore/{product}', [ProductController::class, 'restore'])->name('admin.product.restore');
         Route::get('status/{product}', [ProductController::class, 'status'])->name('admin.product.edit');
-        Route::delete('delete/{product}', [ProductController::class, 'delete'])->name('admin.product.delete');
+        Route::delete('delete/{product}', [ProductController::class, 'destroy'])->name('product.delete');
     });
 
     // // ================== CATEGORY ==================
@@ -133,7 +161,3 @@ Route::prefix('admin')->group(function () {
 });
 
 
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });

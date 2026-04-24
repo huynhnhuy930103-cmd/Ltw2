@@ -18,9 +18,9 @@ class TopicController extends Controller
             $query->where('name', 'like', '%' . $request->keyword . '%');
         }
 
-        $topics = $query->paginate(10)->withQueryString();
+        $topic = $query->paginate(10)->withQueryString();
 
-        return view('backend.topic.index', compact('topics'));
+        return view('backend.topic.index', compact('topic'));
     }
 
     // ================== FORM CREATE ==================

@@ -34,7 +34,12 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:brand,name',
+            'detail' => 'required',
+        ], [
+            'name.required' => 'Vui lòng nhập tên thương hiệu.',
+            'name.unique' => 'Tên thương hiệu đã tồn tại.',
+            'detail.required' => 'Vui lòng nhập chi tiết thương hiệu.',
         ]);
 
         $slug = Str::slug($request->name);
@@ -51,18 +56,15 @@ class BrandController extends Controller
             $imageName = $request->file('image')->store('brand', 'public');
         }
 
-        Brand::create([
-            'name' => $request->name,
-            'slug' => $slug,
-            'sort_order' => $request->sort_order ?? 0,
-            'description' => $request->description,
-            'image' => $imageName,
-            'status' => $request->status ?? 1,
-
-            // FIX: dùng Auth chuẩn
-            'created_by' => Auth::id() ?? 1,
-            'updated_by' => null,
-        ]);
+   Brand::create([
+    'name' => $request->name,
+    'slug' => $slug,
+    'sort_order' => $request->sort_order ?? 0,
+    'description' => $request->description ?? '',
+    'image' => $imageName,
+    'status' => $request->status ?? 1,
+    'created_by' => Auth::id() ?? 1,
+]);
 
         return redirect()->route('brand.index')->with('success', 'Thêm thương hiệu thành công');
     }
@@ -153,7 +155,7 @@ class BrandController extends Controller
     {
         Brand::withTrashed()->findOrFail($id)->restore();
 
-        return redirect()->route('brand.trash')->with('success', 'Khôi phục thành công');
+        return redirect()->route('admin.brand.trash')->with('success', 'Khôi phục thành công');
     }
 
     // ================== XÓA VĨNH VIỄN ==================
@@ -161,10 +163,10 @@ class BrandController extends Controller
     {
         Brand::withTrashed()->findOrFail($id)->forceDelete();
 
-        return redirect()->route('brand.trash')->with('success', 'Xóa vĩnh viễn thành công');
+        return redirect()->route('admin.brand.trash')->with('success', 'Xóa vĩnh viễn thành công');
     }
 
-    // ================== STATUS (FIX CHUẨN DB 1-2) ==================
+    // ================== STATUS ) ==================
     public function status($id)
     {
         $brand = Brand::findOrFail($id);
