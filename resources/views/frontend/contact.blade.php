@@ -1,253 +1,159 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
-    <title>Liên hệ - TechShop</title>
-
-    <style>
-        body {
-            font-family: Arial;
-            margin: 0;
-            background: #f5f5f5;
-        }
-
-        header{
-    background:#222;
-    color:white;
-    padding:30px 0;   /* tăng chiều cao header */
-}
-
-.header-container{
-    width:90%;
-    margin:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-/* logo */
-
-.logo h2{
-    margin:0;
-    font-size:32px;   /* logo to hơn */
-    color:#00bfff;
-}
-
-/* menu */
-
-.menu a{
-    color:white;
-    margin:0 15px;
-    text-decoration:none;
-    font-weight:bold;
-    font-size:18px;   /* chữ menu to hơn */
-}
-
-.menu a:hover{
-    color:#00bfff;
-}
-
-/* search */
-
-.search input{
-    padding:10px;
-    font-size:16px;
-}
-
-.search button{
-    padding:10px 15px;
-    background:#00bfff;
-    border:none;
-    color:white;
-    cursor:pointer;
-    font-size:16px;
-}
-
-/* icon giỏ hàng */
-
-.header-icons a{
-    font-size:18px;
-    margin-left:15px;
-    color:white;
-    text-decoration:none;
-}
-.header-icons a:hover{
-    color:#00bfff;
-}
-/* MENU */
-
-.menu a{
-    color:white;
-    margin:0 10px;
-    text-decoration:none;
-    font-weight:bold;
-}
-
-.menu a:hover{
-    color:#00bfff;
-}
-
-/* SEARCH */
-
-.search input{
-    padding:6px;
-    border:none;
-}
-
-.search button{
-    padding:6px 10px;
-    background:#00bfff;
-    border:none;
-    color:white;
-    cursor:pointer;
-}
-
-        /* CONTACT */
-
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            display: flex;
-            gap: 40px;
-        }
-
-        /* INFO */
-
-        .contact-info {
-            width: 40%;
-            background: #F9DFDF;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .contact-info h2 {
-            margin-top: 0;
-        }
-
-        /* FORM */
-
-        .contact-form {
-            width: 60%;
-            background: #F9DFDF;
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        .contact-form input,
-        .contact-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .contact-form button {
-            padding: 10px 20px;
-            background: #007bff;
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        .contact-form button:hover {
-            background: #0056b3;
-        }
-
-        /* FOOTER */
-
-        footer {
-            margin-top: 40px;
-            background: #222;
-            color: white;
-            text-align: center;
-            padding: 15px;
-        }
-    </style>
-
+    <title>Liên hệ - NY Tech</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
-<body>
+<body class="bg-gray-100 text-gray-800">
 
-    <!-- <header>
+    <x-layout-site title="Liên hệ">
 
-        <div class="header-container">
+        <div class="max-w-6xl mx-auto py-10 px-4">
 
-            <div class="logo">
-                <h2> NY Tech</h2>
+            <!-- TITLE -->
+            <div class="text-center mb-10">
+                <h1 class="text-3xl font-bold text-blue-600">📞 Liên hệ với NY Tech</h1>
+                <p class="text-gray-500 mt-2">Chúng tôi luôn sẵn sàng hỗ trợ bạn 24/7</p>
             </div>
 
-            <div class="menu">
-                <a href="/">Trang chủ</a>
-                <a href="/san-pham">Sản phẩm</a>
-                <a href="/lien-he">Liên hệ</a>
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-            <div class="search">
-                <input type="text" placeholder="Tìm sản phẩm...">
-                <button>Tìm</button>
-            </div>
+                <!-- INFO -->
+                <div class="bg-white rounded-2xl shadow p-6 space-y-4">
 
-            <div class="header-icons">
-                <a href="#">👤 Tài khoản</a>
-                <a href="#">🛒 Giỏ hàng (0)</a>
+                    <h2 class="text-xl font-semibold text-gray-700">Thông tin cửa hàng</h2>
+
+                    <div class="space-y-3 text-gray-600">
+
+                        <p>🏬 <b>NY Tech Shop</b></p>
+
+                        <p>📍 44 Tăng Nhơn Phú, TP. Hồ Chí Minh</p>
+
+                        <p>📞 0909 123 456</p>
+
+                        <p>📧 NYtechshop@gmail.com</p>
+
+                        <p>🕒 8:00 - 22:00 (Tất cả các ngày)</p>
+
+                    </div>
+
+                    <!-- SOCIAL -->
+                    <div class="pt-4 border-t">
+                        <p class="font-semibold mb-2">Kết nối với chúng tôi</p>
+
+                        <div class="flex gap-4 text-2xl">
+
+                            <!-- Facebook -->
+                            <a href="https://facebook.com" target="_blank"
+                                class="text-gray-600 hover:text-blue-600 transition">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+
+                            <!-- Zalo -->
+                            <a href="https://zalo.me/0909123456" target="_blank"
+                                class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-500 hover:bg-blue-600 transition">
+
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg"
+                                    alt="Zalo" class="w-5 h-5">
+                            </a>
+
+                            <!-- Instagram -->
+                            <a href="https://instagram.com" target="_blank"
+                                class="text-gray-600 hover:text-pink-500 transition">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+
+                            <!-- TikTok -->
+                            <a href="https://tiktok.com" target="_blank"
+                                class="text-gray-600 hover:text-black transition">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <!-- GOOGLE MAP -->
+                    <div class="mt-6">
+                        <h2 class="text-xl font-semibold text-gray-700 mb-3">Vị trí cửa hàng</h2>
+
+                        <div class="w-full h-64 rounded-2xl overflow-hidden shadow">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.756024644182!2d106.77301137769682!3d10.829973661789701!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317527023f0f718f%3A0x3dd0c816e44a76df!2zNDQgVMSDbmcgTmjGoW4gUGjDuiwgUGjGsOG7m2MgTG9uZyBCLCBQaMaw4bubYyBMb25nLCBI4buTIENow60gTWluaCwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2s!4v1777454773994!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- FORM -->
+
+                <div class="bg-white rounded-2xl shadow p-6">
+
+                    <h2 class="text-xl font-semibold mb-4 text-gray-700">Gửi liên hệ</h2>
+
+                    <!-- THÔNG BÁO -->
+                    @if(session('success'))
+                    <div class="mb-4 p-3 bg-green-100 text-green-700 rounded-lg">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('site.contact.store') }}" class="space-y-4">
+
+                        @csrf
+
+                        <input name="name" type="text"
+                            class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-400 outline-none"
+                            placeholder="Họ và tên">
+                        @error('name')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+
+                        <input name="email" type="email"
+                            class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-400 outline-none"
+                            placeholder="Email">
+                        @error('email')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+
+                        <input name="phone" type="text"
+                            class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-400 outline-none"
+                            placeholder="Số điện thoại">
+                        @error('phone')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+
+                        <input name="title" type="text"
+                            class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-400 outline-none"
+                            placeholder="Tiêu đề">
+                        @error('title')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+
+                        <textarea name="content" rows="5"
+                            class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-400 outline-none"
+                            placeholder="Nội dung cần hỗ trợ"></textarea>
+                        @error('content')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+
+                        <button type="submit"
+                            class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
+                            🚀 Gửi liên hệ
+                        </button>
+
+                    </form>
+
+                </div>
+
             </div>
 
         </div>
 
-    </header> -->
-
-    <x-layout-site title="Liên hệ ">
-    <div class="container">
-
-        <div class="contact-info">
-
-            <h2>Thông tin liên hệ</h2>
-
-            <p>🏬 Cửa hàng: NY Tech</p>
-
-            <p>📍 Địa chỉ: TP Hồ Chí Minh</p>
-
-            <p>📞 Điện thoại: 0909 123 456</p>
-
-            <p>📧 Email: NYtechshop@gmail.com</p>
-
-            <p>🕒 Giờ mở cửa: 8:00 - 22:00</p>
-
-        </div>
-
-
-        <div class="contact-form">
-
-            <h2>Gửi liên hệ</h2>
-
-            <form>
-
-                <input type="text" placeholder="Họ và tên">
-
-                <input type="email" placeholder="Email">
-
-                <input type="text" placeholder="Số điện thoại">
-
-                <textarea rows="5" placeholder="Nội dung"></textarea>
-
-                <button type="submit">Gửi liên hệ</button>
-
-            </form>
-
-        </div>
-
-    </div>
-
-
-    <!-- <footer>
-
-        <p>© 2026 TechShop</p>
-
-    </footer> -->
     </x-layout-site>
+
 </body>
 
 </html>

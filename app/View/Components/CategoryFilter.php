@@ -22,11 +22,13 @@ class CategoryFilter extends Component
      */
     public function render(): View|Closure|string
     {
-        $list_category = Category::select('id', 'name')
-        ->where([['parent_id', '=',0], ['status', '=', 1]])
-        ->orderBy('sort_order', 'ASC')
-        ->get();
+        $list_category = Category::select('id', 'name', 'slug')
+            ->where([
+                ['parent_id', '=', 0],
+                ['status', '=', 1]
+            ])
+            ->orderBy('sort_order', 'ASC')
+            ->get();
         return view('components.category-filter', compact('list_category'));
-
     }
 }

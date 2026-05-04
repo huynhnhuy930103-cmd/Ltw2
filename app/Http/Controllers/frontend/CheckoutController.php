@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Order;
 
 class CheckoutController extends Controller
 {
@@ -13,31 +14,37 @@ class CheckoutController extends Controller
         return view('frontend.checkout', compact('cart'));
     }
 
-    public function store(Request $request)
-    {
-        // Validate
-        $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
-            'address' => 'required',
-        ]);
+   public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required',
+        'phone' => 'required',
+        'address' => 'required',
+    ]);
 
-        // 👉 Lấy giỏ hàng
-        $cart = session()->get('cart', []);
+    $cart = session()->get('cart', []);
 
-        if (empty($cart)) {
-            return back()->with('error', 'Giỏ hàng trống!');
-        }
-
-        // 👉 Tính tổng
-        $total = 0;
-        foreach ($cart as $item) {
-            $total += $item['price'] * $item['qty'];
-        }
-
-        // 👉 (Tạm thời) chưa lưu DB, chỉ xoá giỏ
-        session()->forget('cart');
-
-        return redirect('/gio-hang')->with('success', 'Đặt hàng thành công!');
+    if (empty($cart)) {
+        return back()->with('error', 'Giỏ hàng trống!');
     }
+
+    $total = 0;
+    foreach ($cart as $item) {
+        $total += $item['price'] * $item['qty'];
+    }
+
+    // 👉 LƯU DB
+    Order::create([
+        'user_id' => session('user_site.id'),
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone,
+        'address' => $request->address,
+        'total' => $total,
+    ]);
+
+    session()->forget('cart');
+
+    return redirect('/gio-hang')->with('success', 'Đặt hàng thành công!');
+}
 }

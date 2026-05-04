@@ -115,37 +115,51 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                         @foreach($list_product as $product)
-                        <div class="bg-white shadow rounded overflow-hidden">
+                        <div class="bg-white rounded-2xl shadow-md hover:shadow-xl transition overflow-hidden group">
 
-                            <img src="{{ $product->image ?? 'https://picsum.photos/300/250' }}">
+                            <!-- IMAGE -->
+                            <div class="relative overflow-hidden">
+                                <img src="{{ $product->image
+            ? asset('storage/' . $product->image)
+            : 'https://picsum.photos/300/250' }}"
+                                    class="w-full h-56 object-contain bg-gray-100 p-3 transition duration-300 group-hover:scale-110">
 
+
+                            </div>
+
+                            <!-- CONTENT -->
                             <div class="p-4">
-                                <h3 class="font-semibold mb-2">
+
+                                <h3 class="font-semibold text-gray-800 mb-2 line-clamp-2 h-12">
                                     {{ $product->name }}
                                 </h3>
 
-                                <p class="text-red-500 font-bold mb-3">
+                                <p class="text-red-500 font-bold text-lg mb-3">
                                     {{ number_format($product->price_buy) }}đ
                                 </p>
 
-                                <div class="flex justify-between">
+                                <!-- ACTION -->
+                                <div class="flex justify-between items-center">
+
                                     <a href="/them-gio/{{ $product->id }}"
-                                        class="bg-blue-500 text-white px-3 py-2 rounded">
+                                        class="bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600">
                                         <i class="fa fa-cart-plus"></i>
-
                                     </a>
 
-                                    <button class="border px-3 py-2 rounded">
-                                        <i class="fa fa-heart"></i>
-                                    </button>
+                                    <div class="flex gap-2">
+                                        <button class="border px-3 py-2 rounded hover:bg-gray-100">
+                                            <i class="fa fa-heart"></i>
+                                        </button>
 
-                                    <a href="{{ route('site.product.detail', $product->slug) }}"
-                                        class="border px-3 py-2 rounded">
-                                        <i class="fa fa-eye"></i>
-                                    </a>
+                                        <a href="{{ route('site.product.detail', $product->slug) }}"
+                                            class="border px-3 py-2 rounded hover:bg-gray-100">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </div>
+
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                         @endforeach
 

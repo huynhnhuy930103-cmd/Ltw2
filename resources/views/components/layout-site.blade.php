@@ -38,23 +38,61 @@
             </div>
 
             <!-- Right -->
-            <div class="flex items-center gap-5">
-
-                <a href="{{ route('site.login') }}"
-                    class="flex items-center gap-2 text-white hover:underline">
+            <div class="relative group">
+                <!-- Nút tài khoản -->
+                <button class="flex items-center gap-2 text-white hover:text-blue-300">
                     👤 Tài khoản
-                </a>
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                </button>
 
-                <a href="/gio-hang"
-                    class="cursor-pointer font-medium hover:text-blue-300 flex items-center gap-1">
-                    🛒 Giỏ hàng (
-                    <span class="bg-white text-orange-500 px-2 py-[2px] rounded-full text-xs">
-                        {{ count(session('cart', [])) }}
-                    </span>
-                    )
-                </a>
+                <!-- Dropdown -->
 
+                <div class="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-md shadow-lg
+            opacity-0 invisible translate-y-2
+            group-hover:opacity-100 group-hover:visible group-hover:translate-y-0
+            transition-all duration-200 z-50">
+                    <!-- Nếu chưa đăng nhập -->
+                    @if(!session()->has('user_site'))
+                    <a href="{{ route('site.login') }}"
+                        class="block px-4 py-2 hover:bg-gray-100">
+                        🔑 Đăng nhập
+                    </a>
+
+                    <a href="/dang-ky"
+                        class="block px-4 py-2 hover:bg-gray-100">
+                        📝 Đăng ký
+                    </a>
+                    @else
+                    <!-- Nếu đã đăng nhập -->
+                    <a href="/thong-tin"
+                        class="block px-4 py-2 hover:bg-gray-100">
+                        👤 Thông tin tài khoản
+                    </a>
+
+                    <hr>
+
+                    <form action="/dang-xuat" method="post">
+                        @csrf
+                        <button type="submit"
+                            class="block w-full text-left px-4 py-2 hover:bg-red-100 text-red-600">
+                            🚪 Đăng xuất
+                        </button>
+                    </form>
+                    @endif
+
+                </div>
             </div>
+
+            <a href="/gio-hang"
+                class="cursor-pointer font-medium hover:text-blue-300 flex items-center gap-1">
+                🛒 Giỏ hàng (
+                <span class="bg-white text-orange-500 px-2 py-[2px] rounded-full text-xs">
+                    {{ count(session('cart', [])) }}
+                </span>
+                )
+            </a>
+
+        </div>
 
         </div>
     </header>
@@ -65,9 +103,7 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="mt-10 bg-gray-900 text-white text-center py-4">
-        © 2026 TechShop - Điện thoại & Laptop
-    </footer>
+    <x-menu-footer />
 
 </body>
 

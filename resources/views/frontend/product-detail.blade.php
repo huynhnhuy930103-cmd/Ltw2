@@ -3,12 +3,14 @@
     <div class="max-w-6xl mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 gap-10">
 
         <!-- IMAGE -->
-        <div class="bg-white p-6 rounded-2xl shadow flex justify-center items-center">
-            <img
-                src="{{ asset('img/' . $product->image) }}"
-                alt="{{ $product->name }}"
-                class="w-72 hover:scale-105 transition duration-300">
-        </div>
+         <div class="relative overflow-hidden">
+                                <img src="{{ $product->image
+            ? asset('storage/' . $product->image)
+            : 'https://picsum.photos/300/250' }}"
+                                    class="w-full h-56 object-contain bg-gray-100 p-3 transition duration-300 group-hover:scale-110">
+
+
+                            </div>
 
         <!-- INFO -->
         <div class="bg-white p-6 rounded-2xl shadow">

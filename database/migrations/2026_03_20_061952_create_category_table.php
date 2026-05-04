@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->unsignedInteger('created_by')->default(1);
             $table->unsignedInteger('updated_by')->nullable();
-            $table->unsignedTinyInteger('status')->default(2);
+            $table->unsignedTinyInteger('status')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

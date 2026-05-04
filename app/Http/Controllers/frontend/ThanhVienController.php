@@ -1,74 +1,105 @@
 <?php
 
 namespace App\Http\Controllers\frontend;
-use App\Http\Controllers\Controller;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class ThanhVienController extends Controller
 {
-    // Hiển thị form login
-    public function login()
-{
-    if (session()->has('user')) {
-        return redirect()->route('site.home'); // ✅ về trang chủ
+    function login()
+    {
+        return view('frontend.login');
     }
 
-    return view('frontend.login');
-}
-    // Xử lý login
-    public function doLogin(Request $request)
+    function dologin(Request $request)
     {
         $username = $request->username;
         $password = $request->password;
-
         $args = [
-            'status' => 1
+            ['status', '=', 1],
         ];
 
-        // check email hay username
         if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
-            $args['email'] = $username;
+            $args[] = ['email', '=', $username];
         } else {
-            $args['username'] = $username;
+            $args[] = ['username', '=', $username];
         }
 
         $user = User::where($args)->first();
-
         if ($user != null) {
             if (Hash::check($password, $user->password)) {
-
-                // lưu session
-                session(['user' => $user]);
-
-                return redirect()->route('site.profile')
-                    ->with('success', 'Đăng nhập thành công');
+                session()->put('user_site', $user);
+                return redirect()->route('site.home')->with('success', 'Đăng nhập thành công');
             } else {
-                return redirect()->route('site.login')
-                    ->with('error', 'Mật khẩu không đúng');
+                return redirect()->route('site.login')->with('error', 'Mật khẩu không đúng');
             }
         } else {
+            return redirect()->route('site.login')->with('error', 'Tên đăng nhập hoặc email không tồn tại');
+        }
+    }
+
+
+    function register()
+    {
+        return view('frontend.register');
+    }
+
+    function doregister(Request $request)
+    {
+        // validate
+        $request->validate([
+            'username' => 'required|unique:user,username',
+            'email' => 'required|email|unique:user,email',
+            'password' => 'required|min:6',
+        ]);
+$user = User::create([
+    'name' => $request->username,
+    'username' => $request->username,
+    'email' => $request->email,
+
+    // FIX CHÍNH Ở ĐÂY
+    'phone' => $request->phone ?? '0000000000',
+
+    'password' => Hash::make($request->password),
+    'address' => null,
+    'image' => null,
+    'roles' => 'user',
+    'status' => 1,
+]);
+
+        if ($user) {
             return redirect()->route('site.login')
-                ->with('error', 'Tài khoản không tồn tại');
+                ->with('success', 'Đăng ký thành công, hãy đăng nhập');
         }
+
+        return back()->with('error', 'Đăng ký thất bại');
     }
 
-    // logout
-    public function logout()
-    {
-        session()->forget('user');
-        return redirect()->route('site.login');
-    }
+function logout(Request $request)
+{
+    $request->session()->forget('user_site');
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
 
-    // profile
+    return redirect('/');
+}
+
+
     public function profile()
-    {
-        if (!session()->has('user')) {
-            return redirect()->route('site.login');
-        }
+{
+    $user = session('user_site');
 
-        return view('frontend.profile');
+    if (!$user) {
+        return redirect()->route('site.login')
+            ->with('error', 'Bạn cần đăng nhập trước');
     }
+
+    return view('frontend.profile', compact('user'));
+}
 }

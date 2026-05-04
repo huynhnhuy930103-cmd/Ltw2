@@ -1,43 +1,33 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Admin Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<body class="flex items-center justify-center h-screen bg-gray-100">
 
-<body class="bg-gray-900 flex items-center justify-center min-h-screen">
+<div class="bg-white p-8 rounded shadow w-96">
 
-<div class="bg-gray-800 text-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
-
-    <h2 class="text-3xl font-bold text-center mb-2">
-        📱 Admin Login
-    </h2>
-
-    <p class="text-gray-400 text-center mb-6 text-sm">
-        Quản lý shop điện thoại
-    </p>
+    <h2 class="text-2xl font-bold mb-6 text-center">Đăng nhập Admin</h2>
 
     @if(session('error'))
-        <p class="text-red-400 text-center mb-4">{{ session('error') }}</p>
+        <div class="text-red-500 mb-3">{{ session('error') }}</div>
     @endif
 
-    <form method="POST" action="{{ route('admin.handleLogin') }}" class="space-y-4">
+    <form method="POST" action="{{ route('admin.login.dologin') }}">
         @csrf
 
-        <input type="email" name="email" placeholder="Email"
-            class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required>
+        <input type="text" name="username" placeholder="Username"
+            class="w-full border p-2 mb-3 rounded">
 
-        <input type="password" name="password" placeholder="Mật khẩu"
-            class="w-full p-3 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            required>
+        <input type="password" name="password" placeholder="Password"
+            class="w-full border p-2 mb-3 rounded">
 
-        <button type="submit"
-            class="w-full py-3 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-400 hover:opacity-90 transition font-semibold">
-            Đăng nhập
+        <button class="w-full bg-blue-600 text-white py-2 rounded">
+            Login
         </button>
     </form>
+
 </div>
 
 </body>

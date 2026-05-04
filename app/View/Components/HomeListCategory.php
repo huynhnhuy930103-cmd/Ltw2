@@ -27,10 +27,10 @@ class HomeListCategory extends Component
             ['parent_id', '=', 0],
         ];
 
-        $categorys = Category::where($args)
+        $categories = Category::where($args)
             ->orderBy('sort_order', 'DESC')
             ->get();
 
-        return view('components.home-list-category', compact('categorys'));
+        return view('components.home-list-category', compact('categories'));
     }
 }

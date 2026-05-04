@@ -23,6 +23,9 @@ use App\Http\Controllers\backend\ProductController;
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\OrderController;
 use App\Http\Controllers\backend\UserController;
+use App\Http\Controllers\backend\AuthController;
+
+
 use App\Http\Controllers\frontend\RegisterController;
 use App\Http\Controllers\backend\BrandController;
 use App\Http\Controllers\backend\OrderDetailController;
@@ -60,11 +63,11 @@ Route::get('/xoa-gio/{id}', [CartController::class, 'remove']);
 Route::get('/thanh-toan', [CheckoutController::class, 'index'])->name('checkout.index');
 Route::post('/dat-hang', [CheckoutController::class, 'store'])->name('checkout.store');
 
-Route::get('/dang-nhap', [ThanhVienController::class, 'doLogin']);
+Route::get('/dang-nhap', [ThanhVienController::class, 'login']);
 Route::post('/dang-nhap', [ThanhVienController::class, 'dologin'])->name('site.login');
 Route::get('/dang-ky', [ThanhVienController::class, 'register'])->name('site.register');
 Route::post('/dang-ky', [ThanhVienController::class, 'doregister'])->name('site.doregister');
-Route::get('/dang-xuat', [ThanhVienController::class, 'logout'])->name('site.logout');
+Route::post('/dang-xuat', [ThanhVienController::class, 'logout'])->name('site.logout');
 Route::get('/thong-tin', [ThanhVienController::class, 'profile'])->name('site.profile');
 
 // ==========================Admin===========================
@@ -119,7 +122,7 @@ Route::prefix('admin')->group(function () {
     Route::prefix('orderdetails')->group(function () {
         Route::get('trash', [OrderDetailController::class, 'trash'])->name('admin.orderdetail.trash');
         Route::get('restore/{orderdetail}', [OrderDetailController::class, 'restore'])->name('admin.orderdetail.restore');
-        Route::delete('delete/{orderdetail}', [OrderDetailController::class, 'delete'])->name('admin.orderdetail.delete');
+        Route::delete('delete/{orderdetail}', [OrderDetailController::class, 'destroy'])->name('admin.orderdetail.delete');
     });
 
     // ================== CONTACT==================
@@ -160,4 +163,15 @@ Route::prefix('admin')->group(function () {
     });
 });
 
+// LOGIN ADMIN
+Route::get('/admin/login', [AuthController::class, 'login'])->name('admin.login');
+Route::post('/admin/login', [AuthController::class, 'dologin'])->name('admin.login.dologin');
 
+// LOGOUT ADMIN
+Route::get('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
+
+
+Route::prefix('admin')->middleware('login-admin')->group(function () {
+
+
+});
