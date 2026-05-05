@@ -4,7 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
+
 
 class LoginAdmin
 {
@@ -13,9 +14,9 @@ class LoginAdmin
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
 {
-    if (!session()->has('admin')) {
+    if (!Auth::check() || Auth::user()->roles !== 'admin') {
         return redirect()->route('admin.login');
     }
 

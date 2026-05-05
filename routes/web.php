@@ -56,6 +56,18 @@ Route::get('/them-gio/{id}', [CartController::class, 'add']);
 Route::post('/cap-nhat-gio/{id}', [CartController::class, 'update']);
 Route::get('/xoa-gio/{id}', [CartController::class, 'remove']);
 
+Route::get('/shopping-guide', function () {
+    return view('frontend.shopping-guide');
+});
+
+Route::get('/payment-methods', function () {
+    return view('frontend.payment-methods');
+});
+
+Route::get('/faq', function () {
+    return view('frontend.faq');
+});
+
 
 //=========================TRANG THANH TOÁN=========================
 
@@ -71,7 +83,7 @@ Route::post('/dang-xuat', [ThanhVienController::class, 'logout'])->name('site.lo
 Route::get('/thong-tin', [ThanhVienController::class, 'profile'])->name('site.profile');
 
 // ==========================Admin===========================
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('login.admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('product', ProductController::class);
     Route::prefix('products')->group(function () {
@@ -163,15 +175,16 @@ Route::prefix('admin')->group(function () {
     });
 });
 
-// LOGIN ADMIN
+// LOGIN KHÔNG CÓ MIDDLEWARE
 Route::get('/admin/login', [AuthController::class, 'login'])->name('admin.login');
 Route::post('/admin/login', [AuthController::class, 'dologin'])->name('admin.login.dologin');
 
-// LOGOUT ADMIN
+// LOGOUT
 Route::get('/admin/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
-
-Route::prefix('admin')->middleware('login-admin')->group(function () {
-
-
-});
+// ADMIN (CÓ MIDDLEWARE)
+// Route::prefix('/admin')->middleware('login.admin')->group(function () {
+//     Route::get('/', function () {
+//         return view('admin.dashboard');
+//     });
+// });

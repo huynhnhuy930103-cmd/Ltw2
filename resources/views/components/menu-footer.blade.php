@@ -34,10 +34,10 @@
         <div>
     <h3 class="text-lg font-semibold text-white mb-4">Hỗ trợ</h3>
     <ul class="space-y-2 text-sm">
-        <li><a href="#" class="hover:text-white">Hướng dẫn mua hàng</a></li>
-        <li><a href="#" class="hover:text-white">Hình thức thanh toán</a></li>
-        <li><a href="#" class="hover:text-white">Câu hỏi thường gặp (FAQ)</a></li>
-        <li><a href="#" class="hover:text-white">Liên hệ hỗ trợ</a></li>
+        <li><a href="/shopping-guide" class="hover:text-white">Hướng dẫn mua hàng</a></li>
+        <li><a href="/payment-methods" class="hover:text-white">Hình thức thanh toán</a></li>
+        <li><a href="/faq" class="hover:text-white">Câu hỏi thường gặp (FAQ)</a></li>
+        <li><a href="/lien-he" class="hover:text-white">Liên hệ hỗ trợ</a></li>
     </ul>
 </div>
 
