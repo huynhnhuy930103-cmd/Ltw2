@@ -1,131 +1,56 @@
-<!DOCTYPE html>
-<html lang="vi">
+<x-layout-site title="Giới thiệu">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Giới thiệu - TechShop</title>
+<div class="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-2xl shadow">
 
-    <style>
-        body {
-            font-family: Arial;
-            margin: 0;
-            background: #f8fafc;
-            color: #1f2937;
-        }
+    <div class="text-right mb-6">
+        <a href="{{ route('site.about.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-800">Quay lại</a>
+    </div>
 
-        /* HEADER */
+    @if($about)
 
-        header {
-            background: linear-gradient(135deg, #2563eb, #1e40af);
-            color: white;
-            padding: 20px 0;
-        }
+        <!-- TITLE -->
+        <h1 class="text-3xl font-bold text-blue-600 mb-6 text-center">
+            {{ $about->title }}
+        </h1>
 
-        .header-container {
-            width: 90%;
-            margin: auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+        <!-- CONTENT -->
+        <div class="prose max-w-none text-gray-700 leading-7">
+            {!! $about->detail !!}
+        </div>
 
-        .logo h2 {
-            margin: 0;
-        }
+        <!-- 🔥 PHẦN THÊM -->
+        <div class="grid md:grid-cols-3 gap-6 text-center">
 
-        .menu a {
-            color: white;
-            margin: 0 10px;
-            text-decoration: none;
-        }
-
-        .menu a:hover {
-            color: #93c5fd;
-        }
-
-        /* ACTIVE MENU */
-
-        .menu .active {
-            border-bottom: 2px solid white;
-        }
-
-        /* CONTENT */
-
-        .container {
-            width: 80%;
-            margin: 40px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-        }
-
-        h1 {
-            color: #2563eb;
-        }
-
-        .section {
-            margin-top: 20px;
-        }
-
-        .section h3 {
-            color: #1e40af;
-        }
-
-        /* FOOTER */
-
-        footer {
-            margin-top: 40px;
-            background: #1f2937;
-            color: #d1d5db;
-            text-align: center;
-            padding: 15px;
-        }
-    </style>
-</head>
-
-<body>
-
-
-
-    <!-- CONTENT -->
-    <x-layout-site title="Giới thiệu - TechShop">
-        <div class="container">
-
-            <h1>Giới thiệu về TechShop</h1>
-
-            <p>
-                NYTechShop là cửa hàng chuyên cung cấp các sản phẩm công nghệ như điện thoại, laptop và phụ kiện chính hãng.
-                Chúng tôi cam kết mang đến cho khách hàng sản phẩm chất lượng cao với giá cả hợp lý 💙
-            </p>
-
-            <div class="section">
-                <h3>🎯 Sứ mệnh</h3>
-                <p>
-                    Mang đến trải nghiệm mua sắm công nghệ tốt nhất cho khách hàng Việt Nam.
+            <div class="bg-gray-100 p-5 rounded-xl">
+                <div class="text-3xl mb-2">📱</div>
+                <h3 class="font-semibold text-lg mb-1">Sản phẩm</h3>
+                <p class="text-gray-600 text-sm">
+                    Điện thoại chính hãng, đa dạng mẫu mã.
                 </p>
             </div>
 
-            <div class="section">
-                <h3>🔥 Tại sao chọn chúng tôi?</h3>
-                <ul>
-                    <li>✔ Sản phẩm chính hãng 100%</li>
-                    <li>✔ Giá tốt - nhiều ưu đãi</li>
-                    <li>✔ Bảo hành uy tín</li>
-                    <li>✔ Giao hàng nhanh</li>
-                </ul>
+            <div class="bg-gray-100 p-5 rounded-xl">
+                <div class="text-3xl mb-2">⚡</div>
+                <h3 class="font-semibold text-lg mb-1">Dịch vụ</h3>
+                <p class="text-gray-600 text-sm">
+                    Tư vấn tận tâm, hỗ trợ nhanh chóng.
+                </p>
             </div>
 
-            <div class="section">
-                <h3>📞 Liên hệ</h3>
-                <p>Email: techshop@gmail.com</p>
-                <p>Hotline: 0123 456 789</p>
+            <div class="bg-gray-100 p-5 rounded-xl">
+                <div class="text-3xl mb-2">🛡️</div>
+                <h3 class="font-semibold text-lg mb-1">Bảo hành</h3>
+                <p class="text-gray-600 text-sm">
+                    Chính hãng, minh bạch và uy tín.
+                </p>
             </div>
 
         </div>
 
+    @else
+        <p class="text-center text-gray-500">Không có dữ liệu</p>
+    @endif
 
-    </x-layout-site>
-</body>
+</div>
 
-</html>
+</x-layout-site>

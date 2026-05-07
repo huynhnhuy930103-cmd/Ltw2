@@ -1,123 +1,147 @@
 <x-layout-admin>
 
-<div class="min-h-screen bg-gray-100 p-6">
+<div class="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 p-6">
 
-    <div class="max-w-7xl mx-auto bg-white p-6 rounded-2xl shadow">
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-bold text-gray-800">
+            🖼 Quản lý banner
+        </h2>
 
-        <!-- HEADER -->
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">
-                🖼️ Quản lý banner
-            </h2>
+        <div class="flex gap-3">
 
-            <a href="{{ route('banner.create') }}"
-               class="px-5 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600">
-                ➕ Thêm banner
-            </a>
-        </div>
+    <a href="{{ route('banner.create') }}"
+       class="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-5 py-2 rounded-lg shadow-lg hover:scale-105 transition">
+        ➕ Thêm mới
+    </a>
 
-        <!-- TABLE -->
-        <div class="overflow-x-auto">
+    <a href="{{ route('admin.banner.trash') }}"
+       class="bg-gradient-to-r from-red-500 to-pink-500 text-white px-5 py-2 rounded-lg shadow-lg hover:scale-105 transition">
+        🗑 Thùng rác
+    </a>
 
-            <table class="w-full border">
+</div>
+    </div>
 
-                <thead class="bg-gray-100 text-left">
-                    <tr>
-                        <th class="p-3 border">ID</th>
-                        <th class="p-3 border">Hình ảnh</th>
-                        <th class="p-3 border">Tên</th>
-                        <th class="p-3 border">Link</th>
-                        <th class="p-3 border">Vị trí</th>
-                        <th class="p-3 border">Thứ tự</th>
-                        <th class="p-3 border">Trạng thái</th>
-                        <th class="p-3 border text-center">Hành động</th>
-                    </tr>
-                </thead>
+    <!-- TABLE CARD -->
+    <div class="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl overflow-hidden border border-gray-200">
 
-                <tbody>
+        <table class="w-full text-sm">
 
-                    @foreach($banners as $item)
+            <!-- HEADER -->
+            <thead class="bg-gradient-to-r from-indigo-500 to-blue-500 text-white text-xs uppercase">
+                <tr>
+                    <th class="p-4 text-left">ID</th>
+                    <th class="p-4 text-left">Hình ảnh</th>
+                    <th class="p-4 text-left">Tên</th>
+                    <th class="p-4 text-left">Link</th>
+                    <th class="p-4 text-left">Vị trí</th>
+                    <th class="p-4 text-center">Sắp xếp</th>
+                    <th class="p-4 text-center">Trạng thái</th>
+                    <th class="p-4 text-center">Chức năng</th>
+                </tr>
+            </thead>
 
-                    <tr class="border-t hover:bg-gray-50">
+            <tbody class="divide-y">
 
-                        <!-- ID -->
-                        <td class="p-3 border">
-                            {{ $item->id }}
-                        </td>
+                @foreach($banners as $item)
+                <tr class="hover:bg-indigo-50 transition">
 
-                        <!-- IMAGE -->
-                        <td class="p-3 border">
-                            <img src="{{ asset('uploads/banners/' . $item->image) }}"
-                                 class="w-16 h-16 object-cover rounded-lg border">
-                        </td>
+                    <!-- ID -->
+                    <td class="p-4 font-semibold text-gray-600">
+                        {{ $item->id }}
+                    </td>
 
-                        <!-- NAME -->
-                        <td class="p-3 border font-semibold">
-                            {{ $item->name }}
-                        </td>
+                    <!-- IMAGE -->
+                    <td class="p-4">
+                        @if($item->image)
+                        <img src="{{ asset('uploads/banners/' . $item->image) }}"
+                             class="w-20 h-12 object-cover rounded-lg border shadow">
+                        @endif
+                    </td>
 
-                        <!-- LINK -->
-                        <td class="p-3 border text-blue-500">
-                            <a href="{{ $item->link }}" target="_blank">
-                                {{ Str::limit($item->link, 30) }}
-                            </a>
-                        </td>
+                    <!-- NAME -->
+                    <td class="p-4 font-semibold text-gray-800">
+                        {{ $item->name }}
+                    </td>
 
-                        <!-- POSITION -->
-                        <td class="p-3 border">
-                            <span class="px-2 py-1 rounded text-xs
-                                {{ $item->position == 'slideshow' ? 'bg-blue-100 text-blue-600' : 'bg-yellow-100 text-yellow-600' }}">
-                                {{ $item->position }}
+                    <!-- LINK -->
+                    <td class="p-4 text-blue-600 underline">
+                        <a href="{{ $item->link }}" target="_blank">
+                            {{ Str::limit($item->link, 30) }}
+                        </a>
+                    </td>
+
+                    <!-- POSITION -->
+                    <td class="p-4">
+                        @if($item->position == 'slideshow')
+                            <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs">
+                                Slideshow
                             </span>
-                        </td>
+                        @else
+                            <span class="bg-yellow-100 text-yellow-600 px-3 py-1 rounded-full text-xs">
+                                Advertise
+                            </span>
+                        @endif
+                    </td>
 
-                        <!-- SORT -->
-                        <td class="p-3 border text-center">
-                            {{ $item->sort_order }}
-                        </td>
+                    <!-- SORT -->
+                    <td class="p-4 text-center text-gray-700">
+                        {{ $item->sort_order }}
+                    </td>
 
-                        <!-- STATUS -->
-                        <td class="p-3 border">
-                            @if($item->status == 1)
-                                <span class="text-green-600 font-semibold">✔ Hiển thị</span>
-                            @else
-                                <span class="text-red-500 font-semibold">⛔ Ẩn</span>
-                            @endif
-                        </td>
+                    <!-- STATUS -->
+                    <td class="p-4 text-center">
+                        @if($item->status)
+                            <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs">
+                                ● Hiển thị
+                            </span>
+                        @else
+                            <span class="bg-gray-200 text-gray-600 px-3 py-1 rounded-full text-xs">
+                                ● Ẩn
+                            </span>
+                        @endif
+                    </td>
 
-                        <!-- ACTION -->
-                        <td class="p-3 border text-center space-x-2">
+                    <!-- ACTION -->
+                    <td class="p-4">
+    <div class="flex gap-2 justify-center">
 
-                            <a href="{{ route('banner.edit', $item->id) }}"
-                               class="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">
-                                Sửa
-                            </a>
+        <!-- XEM -->
+        <a href="{{ route('banner.show', $item->id) }}"
+           class="bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600">
+            Xem
+        </a>
 
-                            <form action="{{ route('banner.destroy', $item->id) }}"
-                                  method="POST"
-                                  class="inline-block"
-                                  onsubmit="return confirm('Xóa banner này?')">
+        <!-- SỬA -->
+        <a href="{{ route('banner.edit', $item->id) }}"
+           class="bg-yellow-400 px-3 py-1 rounded-lg hover:bg-yellow-500">
+            Sửa
+        </a>
 
-                                @csrf
-                                @method('DELETE')
+        <!-- XÓA -->
+        <form action="{{ route('banner.destroy', $item->id) }}"
+              method="POST"
+              onsubmit="return confirm('Xóa banner này?')">
 
-                                <button class="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
-                                    Xóa
-                                </button>
+            @csrf
+            @method('DELETE')
 
-                            </form>
+            <button class="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600">
+                Xóa
+            </button>
 
-                        </td>
+        </form>
 
-                    </tr>
+    </div>
+</td>
 
-                    @endforeach
+                </tr>
+                @endforeach
 
-                </tbody>
+            </tbody>
 
-            </table>
-
-        </div>
+        </table>
 
     </div>
 

@@ -56,17 +56,12 @@
             📝 Bài viết
         </a>
 
-        <!-- SLIDER -->
-        <a href="/admin/slider"
-            class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-rose-500 hover:text-white transition rounded-r-full">
-            🎞️ Trình chiếu
-        </a>
 
         <!-- BANNER -->
-        <!-- <a href="/admin/banner"
+         <a href="/admin/banner"
             class="flex items-center gap-2 px-5 py-3 text-gray-300 hover:bg-teal-500 hover:text-white transition rounded-r-full">
             🖼️ Banner
-        </a> -->
+        </a>
 
         <!-- MENU -->
         <a href="/admin/menu"

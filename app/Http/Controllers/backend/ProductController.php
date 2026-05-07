@@ -30,7 +30,7 @@ class ProductController extends Controller
             $query->where('brand_id', $request->brand_id);
         }
 
-        $products = $query->paginate(10)->withQueryString();
+        $products = $query->paginate(10)->appends($request->query());
 
         $categories = Category::all();
         $brands = Brand::all();
@@ -138,6 +138,12 @@ class ProductController extends Controller
 
         // upload ảnh mới nếu có
         if ($request->hasFile('image')) {
+
+            // xóa ảnh cũ
+            if ($product->image && file_exists(storage_path('app/public/' . $product->image))) {
+                unlink(storage_path('app/public/' . $product->image));
+            }
+
             $imageName = $request->file('image')->store('product', 'public');
         } else {
             $imageName = $product->image;

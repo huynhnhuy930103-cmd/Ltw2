@@ -17,6 +17,7 @@ use App\Http\Controllers\frontend\HomeController;
 use App\Http\Controllers\frontend\ProductController as SanphamController;
 use App\Http\Controllers\frontend\ContactController as LienheController;
 use App\Http\Controllers\frontend\AboutController;
+use App\Http\Controllers\frontend\PostController as FrontendPostController;
 
 use App\Http\Controllers\backend\DashboardController;
 use App\Http\Controllers\backend\ProductController;
@@ -24,6 +25,9 @@ use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\OrderController;
 use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\backend\AuthController;
+use App\Http\Controllers\backend\BannerController;
+
+
 
 
 use App\Http\Controllers\frontend\RegisterController;
@@ -36,6 +40,7 @@ use App\Http\Controllers\backend\MenuController;
 use App\Http\Controllers\frontend\CartController;
 use App\Http\Controllers\frontend\CheckoutController;
 
+
 use App\Http\Controllers\frontend\ThanhVienController;
 
 
@@ -46,6 +51,10 @@ Route::get('san-pham', [SanphamController::class, 'index'])->name('site.product.
 Route::get('san-pham/{slug}', [SanphamController::class, 'detail'])->name('site.product.detail');
 
 Route::get('gioi-thieu', [AboutController::class, 'index'])->name('site.about.index');
+Route::get('gioi-thieu/chi-tiet', [AboutController::class, 'detail'])->name('site.about.detail');
+
+Route::get('/bai-viet', [FrontendPostController::class, 'index'])->name('site.post.index');
+Route::get('/bai-viet/{slug}', [FrontendPostController::class, 'detail'])->name('site.post.detail');
 
 Route::get('lien-he', [LienheController::class, 'index'])->name('site.contact.index');
 Route::post('lien-he', [LienheController::class, 'store'])->name('site.contact.store');
@@ -85,12 +94,14 @@ Route::get('/thong-tin', [ThanhVienController::class, 'profile'])->name('site.pr
 // ==========================Admin===========================
 Route::prefix('admin')->middleware('login.admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+
     Route::resource('product', ProductController::class);
     Route::prefix('products')->group(function () {
         Route::get('trash', [ProductController::class, 'trash'])->name('admin.product.trash');
         Route::get('restore/{product}', [ProductController::class, 'restore'])->name('admin.product.restore');
         Route::get('status/{product}', [ProductController::class, 'status'])->name('admin.product.edit');
         Route::delete('delete/{product}', [ProductController::class, 'destroy'])->name('product.delete');
+        Route::delete('force-delete/{product}', [ProductController::class, 'forceDelete'])->name('product.forceDelete');
     });
 
     // // ================== CATEGORY ==================
@@ -172,6 +183,23 @@ Route::prefix('admin')->middleware('login.admin')->group(function () {
         Route::get('restore/{menu}', [MenuController::class, 'restore'])->name('admin.menu.restore');
         Route::get('status/{menu}', [MenuController::class, 'status'])->name('admin.menu.status');
         Route::delete('delete/{menu}', [MenuController::class, 'delete'])->name('admin.menu.delete');
+    });
+
+    Route::resource('banner', BannerController::class);
+
+    Route::prefix('banners')->group(function () {
+
+        Route::get('trash', [BannerController::class, 'trash'])
+            ->name('admin.banner.trash');
+
+        Route::get('restore/{banner}', [BannerController::class, 'restore'])
+            ->name('admin.banner.restore');
+
+        Route::get('status/{banner}', [BannerController::class, 'status'])
+            ->name('admin.banner.status');
+
+        Route::delete('delete/{banner}', [BannerController::class, 'delete'])
+            ->name('admin.banner.delete');
     });
 });
 

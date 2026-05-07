@@ -25,17 +25,22 @@
                 <a href="/san-pham" class="hover:text-blue-300">Sản phẩm</a>
                 <a href="/gioi-thieu" class="hover:text-blue-300">Giới thiệu</a>
                 <a href="/lien-he" class="hover:text-blue-300">Liên hệ</a>
+                <a href="/bai-viet" class="hover:text-blue-300">Bài viết</a>
             </nav>
 
             <!-- Search -->
-            <div class="flex">
+            <form action="{{ route('site.product.index') }}" method="GET" class="flex">
                 <input type="text"
+                    name="keyword"
+                    value="{{ request('keyword') }}"
                     class="px-3 py-2 rounded-l-md text-black outline-none"
                     placeholder="Tìm sản phẩm...">
-                <button class="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-r-md">
+
+                <button type="submit"
+                    class="px-4 py-2 bg-orange-500 hover:bg-orange-600 rounded-r-md">
                     Tìm
                 </button>
-            </div>
+            </form>
 
             <!-- Right -->
             <div class="relative group">

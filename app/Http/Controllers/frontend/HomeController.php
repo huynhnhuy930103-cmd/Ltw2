@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Post;
 
 class HomeController extends Controller
 {
@@ -30,5 +31,15 @@ class HomeController extends Controller
             'product_sale',
             'product_new'
         ));
+    }
+
+     // 🔥 TRANG GIỚI THIỆU
+    public function about()
+    {
+        $about = Post::where('slug', 'gioi-thieu')
+                    ->where('status', 1)
+                    ->first();
+
+        return view('frontend.about', compact('about'));
     }
 }
